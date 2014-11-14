@@ -1,2 +1,10 @@
-accounts-ui
-accounts-facebook
+meteor add accounts-ui accounts-password accounts-facebook linto:fontawesome mizzao:bootstrap-3
+
+
+Packages used:
+
+accounts-ui 
+accounts-password 
+accounts-facebook 
+linto:fontawesome 
+mizzao:bootstrap-3

@@ -1,12 +1,140 @@
+
+
 <head>
-  <title>Virtual Altruist: Your Altruistic footprint on the web</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+	<title>Virtual Altruist</title>
+
 </head>
 
 <body>
-  <h1>Grow your altruistic footprint on the web now!</h1>
-
-	<div>
-		{{> loginButtons}}
+	<div id="navigation">
+		{{#if currentUser}}
+		<a href="#"><i class="fa fa-home fa-fw"></i></a>
+		{{else}}
+		<a href="#"><i class="fa fa-facebook fa-fw"></i>&nbsp; Sign in</a>
+		{{/if}}
+		<a href="#">LeaderBoard</a>
+		<a href="#">About</a>
+		<a href="#">Contact</a>
 	</div>
-	
+
+ 	<div class="container">
+
+		
+		{{#if currentUser}}
+
+	  	<div class="float-clear">
+
+
+	  		<div class="col_1_2 float-left padding-right-5 block">
+	  			{{>profilePicture}}
+			</div>
+			<div class="col_1_2 float-right padding-left-5 block">
+				{{>nameAndStats}}
+			</div>
+		</div>
+
+
+		<div class="padding-top-15 float-clear"></div>
+
+
+		<div calss="float-clear">
+			<div class="col_1_2 float-left padding-right-5 block">
+
+	  			<div >
+					<h2 class="clear-padding-margin center-text block">Tasks completed <i class="fa fa-check fa-fw"></i></h2>
+					<hr class="style-line clear-padding-margin"/>
+					<ul>
+						{{#each tasks}}
+							{{> taskDone}}
+						{{/each}}
+					</ul>
+
+				</div>
+			</div>
+			<div class="col_1_2 float-right padding-left-5 block">
+				{{#if currentUser}}
+				<form class="new-task">
+					<input type="text" name="text" placeholder="Type to add new tasks"/>
+				</form>
+				{{/if}}
+
+				<ul>
+					{{#each tasks}}
+						{{> task}}
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+
+		{{else}}
+			{{> loginButtons}}
+		{{/if}}
+	</div>
+
+ <div class="float-clear padding-top-50"></div>
+
+ <footer id="footerNav" class="font-size-extra-small font-color-pastel-yellow block center">
+ 		<h6 class="font-color-pastel-yellow">This is the footer for <i>Virtual Altruist</i></h6>
+		<a href="#" class="fa fa-facebook fa-fw font-color-pastel-yellow"></a>
+		<a href="#" class="fa fa-twitter fa-fw font-color-pastel-yellow"></a>
+		<a href="#" class="fa fa-info fa-fw font-color-pastel-yellow"></a>
+		<a href="#" class="fa fa-envelope fa-fw font-color-pastel-yellow"></a>
+
+	</footer>
 </body>
+
+<template name="profilePicture">
+	<img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" alt="bears" class="col_2_3 shadow-box-black center block"/>
+</template>
+
+<template name="nameAndStats">
+	<h1 class="clear-paddding-margin">{{> loginButtons}}<i class="fa fa-magic fa-fw"></i></h1>
+
+	<h5 class="clear-padding-margin">Magician altruist</h5>
+	<h5 class="font-style-bold clear-padding-margin" style="padding-left:{{percentageDone}}%">{{getPointsByUser}} Altrupoints</h5>
+
+	<div class="padding-top-10 float-clear"></div>
+	{{>expProgressBar}}
+</template>
+
+<template name="expProgressBar">
+	<div class="block">
+		<h6 class="clear-padding-margin float-left">0</h6>
+		<h6 class="clear-padding-margin float-right">{{totalCount}}</h6>
+
+	</div>
+
+	<div class="bar-progress bright-pink float-clear">
+		<span style="width: {{percentageDone}}%"></span>
+	</div>
+
+</template>
+
+
+<template name="taskDone">
+	{{#if checked}}
+	<li>
+		<span class="text"><strong>{{username}}</strong> - {{text}}</span><i class="fa fa-plus fa-fw float-right clea">1</i>
+	</li>
+	{{/if}}
+</template>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+    <button class="delete">&times;</button>
+
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+    {{#if isOwner}}
+	  <button class="toggle-private">
+	    {{#if private}}
+	      Private
+	    {{else}}
+	      Public
+	    {{/if}}
+	  </button>
+	{{/if}}
+
+    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+  </li>
+</template>
