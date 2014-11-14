@@ -14,12 +14,15 @@ Template.body.helpers({
     hideCompleted: function () {
       return Session.get("hideCompleted");
     },
-  incompleteCount: function () {
+    //Count number of incompleted tasks
+    incompleteCount: function () {
       return Tasks.find({checked: {$ne: true}}).count();    
     },
+    //Total tasks saved
     totalCount: function () {
       return Tasks.find().count();    
     },
+    //Percentage of tasks done
     percentageDone: function () {
       return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
     }
@@ -32,17 +35,21 @@ Template.task.helpers({
 });
 
 Template.expProgressBar.helpers({
+    //Percentage of tasks done
     percentageDone: function () {
       return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
     },
+    //Total tasks saved
     totalCount: function () {
       return Tasks.find().count();    
     }
 });
 Template.nameAndStats.helpers({
+    //Get current username
     getUsername: function () {
       return Meteor.userId() && Meteor.user() ? Meteor.user().username : "No user";
     },
+    //Get points that a user has
     getPointsByUser: function () {
       return Tasks.find(
         { checked: {$ne: false} }).count();

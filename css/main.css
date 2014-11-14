@@ -1,4 +1,4 @@
-/* CSS declarations go here */
+/* body and general declaration */
 body {
   font-family: "Lato";
   font-weight: 100;
@@ -22,7 +22,7 @@ button{
   z-index: 10;
 }
 
-
+/* Navigation top bar properties */
 #navigation {
   z-index: 1;
   position: fixed;
@@ -75,7 +75,7 @@ padding-top: 5px;
   background-color: rgba(255,255,255, 1);
 } 
 
-
+/* Footer bar properties */
 #footerNav {
 z-index: 1;
 position: fixed;
@@ -109,7 +109,7 @@ text-decoration: none;
 } 
 
 
-
+/* content properties */
 .container {
   width: 80%;
   margin: 0 auto;
@@ -127,6 +127,7 @@ text-decoration: none;
 }
 
 
+/* properties to create columns to add content inside */
 .col_1_2{
   width: 50%;
 }
@@ -155,6 +156,11 @@ text-decoration: none;
   width: 80%;
 }
 
+.full-width{
+  width: 100%;
+}
+
+/* determine how content should react */
 .float-left{
   float: left;
 }
@@ -171,6 +177,7 @@ text-decoration: none;
     overflow: scroll;
 }
 
+/* Add shadow to elemetns with different padding */
 .shadow-box-black-padding1{
   padding: 1px;
   /* Adds shadow to the bottom of the bar */
@@ -200,6 +207,8 @@ text-decoration: none;
   box-shadow: 0px 0px 2px 0px #000000;
 }
 
+
+/* add padding in different directions and amount */
 .padding-top-3 {
   padding-top:3px;
   font-size:0;
@@ -275,7 +284,7 @@ text-decoration: none;
   padding-right: 15px;
 }
 
-
+/* Add margin in different directions and amount */
 .margin-left-5{
   margin-left: 5px;
 }
@@ -297,7 +306,7 @@ text-decoration: none;
 
 
 
-
+/* Align distribution */
 .center{
   margin-left: auto;
   margin-right: auto;
@@ -310,9 +319,7 @@ text-decoration: none;
   bottom: 0;
 }
 
-.full-width{
-  width: 100%;
-}
+/* Set information as a block with behavior*/
 
 .block{
     display: block;
@@ -322,7 +329,7 @@ text-decoration: none;
 }
 
 
-
+/* change background color */
 .background-color-dark-blue{
   background-color:#112838;
 }
@@ -346,6 +353,7 @@ text-decoration: none;
 }
 
 
+/* Properties for fonts, color, size, style*/
 .font-size-extra-small{
   font-size: 10px;
 }
@@ -401,6 +409,7 @@ text-decoration: none;
   text-decoration: underline;
 }
 
+/* Horizontal line */
 hr.style-line {
     border: 0;
     height: 1px;
@@ -410,6 +419,7 @@ hr.style-line {
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
 }
 
+/* Properties to create a progress bar */
 .bar-progress{
   height: 25px;
   width: 100%;
@@ -444,13 +454,13 @@ hr.style-line {
         background-image: -o-linear-gradient(top, #f0a3a3, #f42323);*/
 }
 
-
-
-
+/* clear padding and margin from element */
 .clear-padding-margin {
   padding: 0;
   margin: 0;
 }
+
+/* Declaration of different predetermined fonts*/
 
 h1 {
 
@@ -478,6 +488,8 @@ h6{
   color:#33301D;
 }
 
+
+/* CSS FROM TODO LIST*/
 
 strong{
   font-weight: 400;

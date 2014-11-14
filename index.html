@@ -7,6 +7,7 @@
 </head>
 
 <body>
+	<!-- CREATE TOP BAR NAVIGATION -->
 	<div id="navigation">
 		{{#if currentUser}}
 		<a href="#"><i class="fa fa-home fa-fw"></i></a>
@@ -18,17 +19,20 @@
 		<a href="#">Contact</a>
 	</div>
 
+	<!-- CREATE CONTENT -->
  	<div class="container">
 
-		
+		<!-- IF USER IS SIGNED IN -->
 		{{#if currentUser}}
 
+		<!-- CREATE FIRST PART -->
 	  	<div class="float-clear">
 
-
+	  		<!-- PROFILE PICTURE-->
 	  		<div class="col_1_2 float-left padding-right-5 block">
 	  			{{>profilePicture}}
 			</div>
+			<!-- NAMES AND STATS -->
 			<div class="col_1_2 float-right padding-left-5 block">
 				{{>nameAndStats}}
 			</div>
@@ -37,8 +41,9 @@
 
 		<div class="padding-top-15 float-clear"></div>
 
-
+		<!-- CREATE SECOND PART INFORMATION-->
 		<div calss="float-clear">
+			<!-- SHOW TASKS COMPLETED-->
 			<div class="col_1_2 float-left padding-right-5 block">
 
 	  			<div >
@@ -52,6 +57,7 @@
 
 				</div>
 			</div>
+			<!-- SHOW TASKS TO BE DONE -->
 			<div class="col_1_2 float-right padding-left-5 block">
 				{{#if currentUser}}
 				<form class="new-task">
@@ -66,14 +72,14 @@
 				</ul>
 			</div>
 		</div>
-
+		<!-- IF NO USER IS SIGNED IN -->
 		{{else}}
 			{{> loginButtons}}
 		{{/if}}
 	</div>
 
  <div class="float-clear padding-top-50"></div>
-
+<!-- CREATE FOOTER -->
  <footer id="footerNav" class="font-size-extra-small font-color-pastel-yellow block center">
  		<h6 class="font-color-pastel-yellow">This is the footer for <i>Virtual Altruist</i></h6>
 		<a href="#" class="fa fa-facebook fa-fw font-color-pastel-yellow"></a>
@@ -84,10 +90,12 @@
 	</footer>
 </body>
 
+<!-- TEMPLATE FOR PROFILE PICTURE -->
+<!-- IMAGE NEEDS TO BE CHANGED FOR FACEBOOK PROFILE PICTURE -->
 <template name="profilePicture">
 	<img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" alt="bears" class="col_2_3 shadow-box-black center block"/>
 </template>
-
+<!-- TEMPLATE FOR NAME AND STATISTICS -->
 <template name="nameAndStats">
 	<h1 class="clear-paddding-margin">{{> loginButtons}}<i class="fa fa-magic fa-fw"></i></h1>
 
@@ -98,6 +106,7 @@
 	{{>expProgressBar}}
 </template>
 
+<!-- TEMPLATE FOR PROGRESS BAR INFORMATION-->
 <template name="expProgressBar">
 	<div class="block">
 		<h6 class="clear-padding-margin float-left">0</h6>
@@ -111,7 +120,7 @@
 
 </template>
 
-
+<!-- TEMPLATE FOR TASKS THAT ARE DONE -->
 <template name="taskDone">
 	{{#if checked}}
 	<li>
@@ -120,6 +129,8 @@
 	{{/if}}
 </template>
 
+
+<!-- TEMPLATE FOR TASKS-->
 <template name="task">
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
     <button class="delete">&times;</button>
