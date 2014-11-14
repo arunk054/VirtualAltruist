@@ -26,7 +26,7 @@
 	Template.body.events({
 	  "submit .new-task": function (event) {
 		FB.ui({
-		  method: 'send',
+		  method: 'share',
 		  link: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
 		});
 	  
