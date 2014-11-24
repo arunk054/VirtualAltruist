@@ -9,6 +9,10 @@
 
 }
 
+.upper_margin{
+	margin: 10px 0 0 0;
+}
+
 
 #login_pic{
 	margin-left:10px;
