@@ -1,0 +1,294 @@
+/* body and general declaration */
+body {
+  /*font-family: "Lato";
+  font-weight: 100;*/
+  /*background-color: #112838;*/
+  /*position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 14px;*/
+}
+
+.max-width-1200{
+  max-width: 1200px;
+}
+/*Bootstrap*/
+.list-special .list-group-item:first-child {
+  border-top-right-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+.list-special .list-group-item:last-child {
+  border-bottom-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.margin-bottom-0-imp{
+  margin-bottom: 0px !important;
+}
+
+.banner-image {
+  display: block;
+  width:100%;
+  height:150px;
+  background-image:url('/resources/green_background.jpg');
+  background-size:cover;
+}
+
+/* determine how content should react */
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+
+.float-clear{
+  clear: both;
+}
+
+
+/* add padding in different directions and amount */
+.padding-top-3 {
+  padding-top:3px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-5 {
+  padding-top:5px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-10 {
+  padding-top:10px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-15 {
+  padding-top:15px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-20 {
+  padding-top:20px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-25 {
+  padding-top:25px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-30 {
+  padding-top:30px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-35 {
+  padding-top:35px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-40 {
+  padding-top:40px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-45 {
+  padding-top:45px;
+  font-size:0;
+  line-height:0;
+}
+.padding-top-50 {
+  padding-top:50px;
+  font-size:0;
+  line-height:0;
+}
+
+.padding-left-5{
+  padding-left: 5px;
+}
+.padding-right-5{
+  padding-right: 5px;
+}
+
+.padding-left-10{
+  padding-left: 10px;
+}
+.padding-right-10{
+  padding-right: 10px;
+}
+.padding-right-10p{
+  padding-right: 10%;
+}
+.padding-left-15{
+  padding-left: 15px;
+}
+.padding-right-15{
+  padding-right: 15px;
+}
+
+/* Add margin in different directions and amount */
+.margin-left-5{
+  margin-left: 5px;
+}
+.margin-right-5{
+  margin-right: 5px;
+}
+.margin-left-10{
+  margin-left: 10px;
+}
+.margin-right-10{
+  margin-right: 10px;
+}
+.margin-left-15{
+  margin-left: 15px;
+}
+.margin-right-15{
+  margin-right: 15px;
+}
+.margin-bottom-30{
+  margin-bottom: 30px;
+}
+
+
+
+/* Align distribution */
+.center-div-step-1{
+  display: table; 
+  height: 100%; 
+  overflow: hidden; 
+  width:100%;
+}
+.center-div-step-2{
+  display: table-cell; 
+  text-align:center; 
+  vertical-align: middle;
+}
+
+.center{
+  margin-left: auto;
+  margin-right: auto;
+}
+.center-text{
+  text-align: center;
+}
+
+.bottom{
+  bottom: 0;
+}
+
+/* Set information as a block with behavior*/
+
+.block{
+    display: block;
+}
+.block-inline{
+    display: block-inline;
+}
+
+
+/* change background color */
+.background-color-dark-blue{
+  background-color:#112838;
+}
+.background-color-pastel-yellow{
+  background-color:#ECE8CF;
+}
+.background-color-pastel-brown{
+  background-color:#918C6E;
+}
+.background-color-dark-brown{
+  background-color:#33301D;
+}
+.background-color-bright-pink{
+  background-color:#D90D3D;
+}
+.background-color-white{
+  background-color:white;
+}
+.background-color-blak{
+  background-color:black;
+}
+
+
+
+/* Properties for fonts, color, size, style*/
+.font-size-extra-small{
+  font-size: 10px;
+}
+.font-size-small{
+  font-size: 12px;
+}
+.font-size-medium{
+  font-size: 14px;
+}
+.font-size-big{
+  font-size: 20px;
+}
+
+.font-color-dark-blue{
+  color:#112838;
+}
+.font-color-pastel-yellow{
+  color:#ECE8CF;
+}
+.font-color-pastel-brown{
+  color:#918C6E;
+}
+.font-color-dark-brown{
+  color:#33301D;
+}
+.font-color-bright-pink{
+  color:#D90D3D;
+}
+.font-color-white{
+  color:white;
+}
+.font-color-blak{
+  color:black;
+}
+
+.font-style-thin{
+  font-weight: 100;
+}
+
+.font-style-standard{
+  font-weight: 300;
+}
+
+.font-style-medium{
+  font-weight: 400;
+}
+
+.font-style-bold{
+  font-weight: 700;
+}
+
+.font-style-underline{
+  text-decoration: underline;
+}
+
+/* Horizontal line */
+hr.style-line {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+}
+
+
+/* clear padding and margin from element */
+.clear-padding-margin {
+  padding: 0;
+  margin: 0;
+}
