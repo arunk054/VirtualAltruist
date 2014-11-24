@@ -55,7 +55,8 @@
 
 					</div>
 				</div>
-			{{else}} 
+			{{/if}}
+			{{#if aboutPage}} 
 				{{>aboutInformation}}
 			{{/if}}
 		</div>
@@ -66,7 +67,7 @@
 		{{>navigationBar}}
 		{{>bannerImage}}
 		
-
+		{{#if homePage}}
 		<div class="max-width-1200">
 			<div class="col-md-12">
 				<div class="center-div-step-1">
@@ -82,6 +83,10 @@
 				{{>publicLeaderboard}}
 			</div>
 		</div>
+		{{/if}}
+		{{#if aboutPage}} 
+			{{>aboutInformation}}
+		{{/if}}
 		
 	{{/if}}
 </body>
@@ -107,8 +112,8 @@
 	<nav class="navbar navbar-default navbar-fixed-top margin-bottom-0-imp" role="navigation">
 		<div class=" container btn-group" role="group">
 			<ul class="nav navbar-nav navbar-right">
-			    <li class="active my-home"><a href="#" ><i class="fa fa-home fa-fw"></i> <span class="sr-only">(current)</span></a></li>
-			    <li class="{{#if false}}active{{/if}} my-about"><a href="#">About</a></li>
+			    <li class="{{#if homePage}}active{{/if}} my-home"><a href="#" ><i class="fa fa-home fa-fw"></i> <span class="sr-only">(current)</span></a></li>
+			    <li class="{{#if aboutPage}}active{{/if}} my-about"><a href="#">About</a></li>
 			    {{#if currentUser}}
 					{{>logoutFacebook}}
 				{{/if}}
@@ -234,7 +239,7 @@
 
 <template name="shareInfo">
 	<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-	{{#if true}}
+	{{#if hastwitterAccount}}
 		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> 1000</a>
 	{{else}}
 		<h6><a href="">Add twitter account (+100)</a></h6>

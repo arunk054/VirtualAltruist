@@ -1,4 +1,4 @@
 local
 packages
 .meteor
-.DS_STORE
+.DS_Store

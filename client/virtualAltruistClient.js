@@ -34,6 +34,12 @@ Template.body.helpers({
         return true;
       }
       return undefined;
+    },
+    aboutPage: function() {
+      if(Session.get("curPage") == undefined || Session.get("curPage") == "about" ){
+        return true;
+      }
+      return undefined;
     }
 
 });
@@ -53,6 +59,13 @@ Template.expProgressBar.helpers({
       return Tasks.find().count();    
     }
 });
+Template.shareInfo.helpers({
+    //Get current username
+    hastwitterAccount: function () {
+      return Meteor.user().profile.twitterId != "";
+    }
+});
+
 Template.nameAndStats.helpers({
     //Get current username
     getUsername: function () {
@@ -68,6 +81,7 @@ Template.nameAndStats.helpers({
     }
 });
 
+
 Template.profilePicture.helpers({
     //Get current username
     getProfilePicture: function () {
@@ -75,14 +89,28 @@ Template.profilePicture.helpers({
     }
 });
 
+
+Template.navigationBar.helpers({
+    homePage: function() {
+      if(Session.get("curPage") == undefined || Session.get("curPage") == "home" ){
+        return true;
+      }
+      return undefined;
+    },
+    aboutPage: function() {
+      if(Session.get("curPage") == undefined || Session.get("curPage") == "about" ){
+        return true;
+      }
+      return undefined;
+    }
+});
+
 Template.navigationBar.events({
   "click .my-home": function(event){
     Session.set("curPage","home");
-    alert(Session.get("curPage"));
   },
   "click .my-about": function(event){
     Session.set("curPage","about");
-    alert(Session.get("curPage"));
   }
 });
 

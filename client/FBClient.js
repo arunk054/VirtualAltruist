@@ -28,7 +28,7 @@
   	"click #logout": function(e,tmpl){
   		Meteor.logout(function(err) {
 			  if (err){
-			  	//handle error
+			  	Session.set("curPage","home");
 			  }else{
 			  	//everything good
 			  }
