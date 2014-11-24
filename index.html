@@ -3,13 +3,56 @@
 </head>
 
 <body>
-	<div id='fb-root'></div>
-  <h1>Grow your altruistic footprint on the web now!</h1>
+<div class = outer>
+<div class = "cover">
+	<img src = "/images/cover1.jpg" width= "15%" />
+</div>
 
-	<div>
-		{{> loginButtons}}
+	<div id='fb-root'></div>
+	<div class="text-header">
+		  <h1>Grow your altruistic footprint on the web now!</h1>
+	 </div>
+
+	<div class="text-description"> </div>
+	
+	<div >
+			{{> loginButtons}}
+			<span id="login_pic">
+				{{#if currentUser}}
+					{{> profile_pic}}
+				{{/if}}
+			</span>
+			
 	</div>
+{{#if currentUser}}
+	<div>
+	<form role="form">
+	  <div class="form-group">
+		<label for="email">Email address:</label>
+		<input type="email" class="form-control" id="email">
+	  </div>
+	  <div class="form-group">
+		<label for="pwd">Password:</label>
+		<input type="password" class="form-control" id="pwd">
+	  </div>
+	  <div class="checkbox">
+		<label><input type="checkbox"> Remember me</label>
+	  </div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+Enter your twitter ID: 				
+				
+	</div>
+{{/if}}
+
+	<!--
 	<form class="new-task">
-		<input type="submit" name="submit_task" value="Submit this task on FB" />
-	 </form>
+		<input type="submit" name="submit_task" value="Submit this task on FB" /> 
+	 </form> -->
+	 
+</div>
 </body>
+
+<template name="profile_pic">
+	<img src="{{profilePic}}" width="60px"/>
+</template>

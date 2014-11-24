@@ -5,7 +5,7 @@
 		FB.init({
 		  appId      : '287242084819085',
 		  xfbml      : true,
-		  version    : 'v2.1'
+		  version    : 'v2.0'
 		});
 	};
 	(function(d, s, id){
@@ -19,7 +19,7 @@
     
 		Accounts.ui.config({
 			requestPermissions: {
-			facebook: ['email', 'public_profile'],
+			facebook: ['email', 'public_profile', 'user_friends'],
 			}
 		});
 
@@ -27,9 +27,18 @@
 	  "submit .new-task": function (event) {
 		FB.ui({
 		  method: 'share',
-		  link: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
-		});
-	  
+		  //href: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
+		  href: 'https://developers.facebook.com/docs/',
+		}
+		);
 	  }
+	  });
+	  
+	  Template.profile_pic.helpers({
+	  	profilePic: function() {
+  			id = Meteor.user().services.facebook.id;
+			return "http://graph.facebook.com/"+id+"/picture";
+			return id;
+	  	}
 	  });
 
