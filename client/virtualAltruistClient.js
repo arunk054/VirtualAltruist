@@ -59,12 +59,7 @@ Template.expProgressBar.helpers({
       return Tasks.find().count();    
     }
 });
-Template.shareInfo.helpers({
-    //Get current username
-    hastwitterAccount: function () {
-      return Meteor.user().profile.twitterId != "";
-    }
-});
+
 
 Template.nameAndStats.helpers({
     //Get current username

@@ -7,10 +7,11 @@
 	  , access_token_secret:  'M2KXVOvfXMPUhRnOGHCpbjr1vukdcx8WINxtZ6jd5RR7D'
 	});
 
-	var wrappedInsert = Meteor.bindEnvironment(function(tweet) {
-   	 	TwitterPosts.insert(tweet);
-  	}, "Failed to insert tweet into Posts collection.");
+// 	var wrappedInsert = Meteor.bindEnvironment(function(tweet) {
+//    	 	TwitterPosts.insert(tweet);
+//   	}, "Failed to insert tweet into Posts collection.");
     
+
     var searchTweet = function(twitterId, query) {
     	console.log("Searching Tweet for word: "+query);
     	
@@ -28,12 +29,11 @@
 			
 			}
 		});
-
     }
     
     Meteor.methods({
         getTweets: function (twitterId, str) {
-			//Do nothing
+			//Do nothing, backward compatibility
         },
         
         addTweets: function(twitterId) {
@@ -42,6 +42,12 @@
         	console.log("Adding Tweets for TwitterID: "+TwitterId);
         	
         	//For each word in TweetWords
+        	var words = TwitterWords.find();
+        	words.forEach(
+        		function(element, index, array) {
+        			console.log(element);
+        		}
+        	);
         	
         	
         }
