@@ -5,7 +5,7 @@
 			if (twitterId == "") {
 				return;
 			}
-			Meteor.call('getTweets',function(err,result) {});
+			Meteor.call('getTweets',twitterId,twitterId,function(err,result) {});
 			//Keep querying the database
 	 
 		  }

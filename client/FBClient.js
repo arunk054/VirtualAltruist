@@ -32,4 +32,24 @@
 			return id;
 	  	}
 	  });
+	  
+ 	 Template.FBForm.events({	  
+	 	 "submit .FBPost": function (event) {
+
+			FB.ui({
+			  method: 'feed',
+			  link: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
+			  caption: 'Hey Check out!',
+			  picture: '',
+			  description: 'All the things',
+			  name:'hello'
+			},
+			function(response) {
+				window.close();
+		  	}
+
+			
+		);	  
+		  }
+	  });
 
