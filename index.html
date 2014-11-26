@@ -240,7 +240,7 @@
 <template name="shareInfo">
 	<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
 	{{#if hastwitterAccount}}
-		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a>{{myTwitterId}}
+		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a> {{myTwitterId}}
 	{{else}}
 		{{#if isAddingTwitterId}}
 			{{> EnterTwitterId}}

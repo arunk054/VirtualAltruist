@@ -36,7 +36,7 @@ Template.body.helpers({
       return undefined;
     },
     aboutPage: function() {
-      if(Session.get("curPage") == undefined || Session.get("curPage") == "about" ){
+      if(Session.get("curPage") == "about" ){
         return true;
       }
       return undefined;
@@ -93,7 +93,7 @@ Template.navigationBar.helpers({
       return undefined;
     },
     aboutPage: function() {
-      if(Session.get("curPage") == undefined || Session.get("curPage") == "about" ){
+      if(Session.get("curPage") == "about" ){
         return true;
       }
       return undefined;
