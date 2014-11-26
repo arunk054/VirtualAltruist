@@ -11,8 +11,24 @@
    	 	TwitterPosts.insert(tweet);
   	}, "Failed to insert tweet into Posts collection.");
     
-    var addTweet = function(twitterId, query) {
-    	console.log("Tweet Added");
+    var searchTweet = function(twitterId, query) {
+    	console.log("Searching Tweet for word: "+query);
+    	
+		query=str; // ALS, Ferguson, Human Rights, GAY, unicef, lesbian, ebola, HRC, Red cross, obamacare, feministhackerbarbie, feminism
+	//            Twit.get('statuses/user_timeline', { screen_name:'jeffbigham', count: 3 }, function(err, result) {
+		Twit.get('search/tweets', {q:query, from:'jeffbigham', count: 3 }, function(err, result) {
+			if (err) {
+				console.log("Error", err);
+				errOut = err;
+				wrappedInsert(err);
+			} else {
+				wrappedInsert(result);
+				console.log(result);
+				resultOut = result;
+			
+			}
+		});
+
     }
     
     Meteor.methods({
@@ -24,19 +40,9 @@
 			resultOut = null;
         	errOut = null;
         	console.log("Adding Tweets for TwitterID: "+TwitterId);
-			query=str; // ALS, Ferguson, Human Rights, GAY, unicef, lesbian, ebola, HRC, Red cross, obamacare, feministhackerbarbie, feminism
-//            Twit.get('statuses/user_timeline', { screen_name:'jeffbigham', count: 3 }, function(err, result) {
-			Twit.get('search/tweets', {q:query, from:'jeffbigham', count: 3 }, function(err, result) {
-                if (err) {
-                    console.log("Error", err);
-					errOut = err;
-					wrappedInsert(err);
-                } else {
-                	wrappedInsert(result);
-                    console.log(result);
-					resultOut = result;
-					
-                }
-            });
+        	
+        	//For each word in TweetWords
+        	
+        	
         }
     });
