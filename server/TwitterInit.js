@@ -52,3 +52,12 @@
         	
         }
     });
+    
+    
+	//Mine tweets    
+    Meteor.startup(function () {
+    	//Check if 
+    
+    });
+
+

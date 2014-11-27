@@ -1,62 +1,60 @@
-TwitterWords =  new Mongo.Collection("twitter_words");
+TweetWords =  new Mongo.Collection("twitter_words");
 
 // ALS, Ferguson, Human Rights, GAY, unicef, lesbian, ebola, HRC, Red cross, obamacare, feministhackerbarbie, feminism
 
 Meteor.startup(function () {
 
-TwitterWords.remove({});
+TweetWords.remove({});
 
-TwitterWords.insert({
+TweetWords.insert({
 //id: 0,
 	word: "ALS"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "Human Rights"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "Ferguson"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "ebola"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "HRC"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "unicef"
 });
 
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "Red Cross"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "obamacare"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "feministhackerbarbie"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "feminism"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "gay"
 });
 
-TwitterWords.insert({
+TweetWords.insert({
 	word: "lesbian"
 });
-
-
 
 });
 

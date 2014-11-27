@@ -21,14 +21,6 @@ Template.body.helpers({
     incompleteCount: function () {
       return Tasks.find({checked: {$ne: true}}).count();    
     },
-    //Total tasks saved
-    totalCount: function () {
-      return Tasks.find().count();    
-    },
-    //Percentage of tasks done
-    percentageDone: function () {
-      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
-    },
     homePage: function() {
       if(Session.get("curPage") == undefined || Session.get("curPage") == "home" ){
         return true;
@@ -52,12 +44,16 @@ Template.task.helpers({
 Template.expProgressBar.helpers({
     //Percentage of tasks done
     percentageDone: function () {
-      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
+//      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
+		var curScore = Meteor.user().profile.score;
+		return curScore%100;
     },
     //Total tasks saved
     totalCount: function () {
-      return Tasks.find().count();    
-    }
+//      return Tasks.find().count();    
+		return Meteor.user().profile.score;
+    },
+
 });
 
 
@@ -73,6 +69,10 @@ Template.nameAndStats.helpers({
     },
     getProfilePoints: function () {
       return Meteor.user().profile.score;
+    }, 
+    getLevel: function () {
+	    var curScore = Meteor.user().profile.score;
+    	return (Math.floor( curScore / 100) + 1)
     }
 });
 
