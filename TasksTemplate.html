@@ -1,0 +1,50 @@
+<!-- TEMPLATE FOR TASKS THAT ARE DONE -->
+<template name="taskDone">
+	{{#if checked}}
+	<a class="list-group-item">
+		<span class="label label-info">twitter</span>
+		<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+		<span class="clear-padding-margin"><small>{{text}}</small></span>
+		<span class="badge"><i class="fa fa-plus fa-fw"></i>1</span>
+	</a>
+	{{/if}}
+</template>
+
+
+<!-- TEMPLATE FOR PRED TASKS-->
+<template name="task">
+	{{#unless checked}}
+		<li class="list-group-item">
+			<button class="delete">&times;</button>
+
+			<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+			<span class="label label-success">share <i class="fa fa-plus fa-fw"></i>1</span>
+			<span class="text">{{text}}</span>
+
+			<div class="btn-group pull-right" role="group">
+			<a id="facebook-share-task" class="btn btn-facebook btn-sm "><i class="fa fa-facebook"></i></a>
+			{{#if hastwitterAccount}}
+				<a class="btn btn-twitter btn-sm "><i class="fa fa-twitter"></i></a>
+			{{/if}}
+			</div>
+		</li>
+  	{{/unless}}
+</template>
+
+<!-- TEMPLATE FOR TASKS-->
+<template name="predefined_task">
+		<div class="list-group-item float-clear">
+			<div class="col-md-2">
+				<span class="label label-success">share <i class="fa fa-plus fa-fw"></i>{{points}}</span>
+			</div>
+			<div class="col-md-7">
+				<small>{{challenge_text}}</small>
+			</div>
+			<div class="col-md-3 btn-group pull-right" role="group">
+				<a id="facebook-share-task" class="btn btn-facebook btn-sm "><i class="fa fa-facebook"></i></a>
+				{{#if hastwitterAccount}}
+					<a class="btn btn-twitter btn-sm "><i class="fa fa-twitter"></i></a>
+				{{/if}}
+			</div>
+		</div>
+</template>

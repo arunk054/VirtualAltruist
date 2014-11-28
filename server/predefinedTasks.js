@@ -3,7 +3,7 @@ Predefined_tasks = new Mongo.Collection("predefined_tasks");
 Meteor.startup(function () {
     // code to run on server at startup
     //
-    Predefined_tasks.remove();
+    Predefined_tasks.remove({});
     Predefined_tasks.insert({
         task_id: 1,
         share_text: "Check out this article on UNICEF's humanitarian aid in South Sudan.",

@@ -1,0 +1,56 @@
+
+
+<template name="profileInformationAndStats">
+		<!-- PROFILE PICTURE-->
+	<div class="col-md-6">
+		{{>profilePicture}}
+	</div>
+	<!-- NAMES AND STATS -->
+	<div class="col-md-6">
+		{{>nameAndStats}}
+	</div>
+	<div class="padding-top-15 float-clear"></div>
+
+</template>
+
+<!-- TEMPLATE FOR PROFILE PICTURE -->
+<template name="profilePicture">
+	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:250px; width:auto;"/>
+</template>
+
+<!-- TEMPLATE FOR NAME AND STATISTICS -->
+<template name="nameAndStats">
+	<h1 class="clear-paddding-margin">{{getUsername}}</h1>
+	{{>shareInfo}}
+	<h4 class="clear-padding-margin" style="padding-left:{{percentageDone}}%"><strong>{{getProfilePoints}} Altrupoints</strong></h4>
+	<h5 class="clear-padding-margin">Level {{getLevel}}</h5>
+
+	<div class="padding-top-10 float-clear"></div>
+	{{>expProgressBar}}
+</template>
+
+<template name="shareInfo">
+	<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+	{{#if hastwitterAccount}}
+		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a> {{myTwitterId}}  <a class="btn btn-social-icon glyphicon glyphicon-refresh" id="RefreshTweets"></a>
+	{{else}}
+		{{#if isAddingTwitterId}}
+			{{> EnterTwitterId}}
+		{{else}}
+			<button type="button" class="btn btn-default" id="addTwitter">Add twitter account (+20)</button>
+		{{/if}}
+
+	{{/if}}
+</template>
+
+<!-- TEMPLATE FOR PROGRESS BAR INFORMATION-->
+<template name="expProgressBar">
+	<h6 class="text-left col-md-6 clear-padding-margin">0</h6>
+	<h6 class="text-right col-md-6 clear-padding-margin">100</h6>
+	<div class="progress col-md-12 clear-padding-margin">
+	  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{percentageDone}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentageDone}}%;">
+	    {{percentageDone}}%
+	  </div>
+	</div>
+
+</template>
