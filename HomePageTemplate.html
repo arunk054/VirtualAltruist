@@ -1,0 +1,56 @@
+<template name="homePageTemplate">
+	<div class="col-md-8 col-md-offset-1">
+		{{>profileInformationAndStats}}
+	</div>
+	<div class="col-md-3 ">
+		{{>publicLeaderboard}}
+	</div>
+	<div class="padding-top-15 float-clear"></div>
+	
+
+
+	<form class="new-task">
+		<input type="text" name="text" placeholder="Type to add new tasks"/>
+	</form>
+	<div>
+		
+		<!-- SHOW TASKS TO BE DONE -->
+		<div class="col-md-5 col-md-offset-1">
+			<h2 class="clear-padding-margin center-text block">Challenge yourself <i class="fa fa-level-up fa-fw"></i></h2>
+			<hr class="style-line clear-padding-margin"/>
+			<ul class="list-group list-special">
+				{{#each predefined_tasks}}
+					{{> predefined_task}}
+				{{/each}}
+				<div class="float-clear"></div>
+				{{#each tasks}}
+					{{> task}}
+				{{/each}}
+			</ul>
+		</div>
+		<!-- SHOW TASKS COMPLETED-->
+		<div class="col-md-5 col-md-offset-1">
+			<h2 class="clear-padding-margin center-text block">Tasks completed <i class="fa fa-check fa-fw"></i></h2>
+			<hr class="style-line clear-padding-margin"/>
+			<div class="list-group list-special">
+				<a class="list-group-item challenges-share-done">Share <span class="badge"><i class="fa fa-plus fa-fw"></i>100</span></a>
+				{{#if showShareDone}}
+				<div class="list-group list-special">
+					{{#each tasks}}
+						{{> taskDone}}
+					{{/each}}
+				</div>
+				{{/if}}
+				<a class="info list-group-item twitter-task-done">Twitter <span class="badge"><i class="fa fa-plus fa-fw"></i>21</span></a>
+				{{#if showTwitterDone}}
+				<div class="list-group list-special">
+					{{#each tasks}}
+						{{> taskDone}}
+					{{/each}}
+				</div>
+				{{/if}}
+			</div>
+
+		</div>
+	</div>
+</template>

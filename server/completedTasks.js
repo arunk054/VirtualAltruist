@@ -1,4 +1,4 @@
-Predefined_tasks = new Mongo.Collection("predefined_tasks");
+/*Predefined_tasks = new Mongo.Collection("predefined_tasks");
 
 Meteor.startup(function () {
     // code to run on server at startup
@@ -44,4 +44,4 @@ Meteor.startup(function () {
         organization: "The Nature Conservancy",
         link: "http://www.nature.org"
     });
-});
+});*/

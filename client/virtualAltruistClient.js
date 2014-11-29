@@ -1,10 +1,13 @@
 Tasks = new Mongo.Collection("tasks");
+pred_task = new Mongo.Collection("predefined_tasks");
 
-this.homePage = true;
+
+Meteor.subscribe("tasks");
+Meteor.subscribe("predefined_tasks");
 
 
-Meteor.subscribe("tasks")
-Template.body.helpers({
+
+Template.homePageTemplate.helpers({
   tasks: function () {
       if (Session.get("hideCompleted")) {
         // If hide completed is checked, filter tasks
@@ -14,6 +17,9 @@ Template.body.helpers({
         return Tasks.find({}, {sort: {createdAt: -1}});
       }
     },
+    predefined_tasks: function () {
+      return pred_task.find({}, {sort: {createdAt: -1}});
+    },
     hideCompleted: function () {
       return Session.get("hideCompleted");
     },
@@ -21,104 +27,68 @@ Template.body.helpers({
     incompleteCount: function () {
       return Tasks.find({checked: {$ne: true}}).count();    
     },
-    homePage: function() {
-      if(Session.get("curPage") == undefined || Session.get("curPage") == "home" ){
+    //Total tasks saved
+    totalCount: function () {
+      return Tasks.find().count();    
+    },
+    //Percentage of tasks done
+    percentageDone: function () {
+      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
+    },
+    showShareDone: function() {
+      if(Session.get("showShareDone") == "show" ){
         return true;
       }
       return undefined;
     },
-    aboutPage: function() {
-      if(Session.get("curPage") == "about" ){
+    showTwitterDone: function() {
+      if(Session.get("showTwitterTask") == "show" ){
         return true;
       }
       return undefined;
     }
+  });
 
-});
 Template.task.helpers({
   isOwner: function () {
     return this.owner === Meteor.userId();
   }
 });
 
-Template.expProgressBar.helpers({
-    //Percentage of tasks done
-    percentageDone: function () {
-//      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
-		var curScore = Meteor.user().profile.score;
-		return curScore%100;
-    },
-    //Total tasks saved
-    totalCount: function () {
-//      return Tasks.find().count();    
-		return Meteor.user().profile.score;
-    },
 
+Template.predefined_task.helpers({
+    hastwitterAccount: function() { return Meteor.user().profile.twitterId != ""; }
 });
 
 
-Template.nameAndStats.helpers({
-    //Get current username
-    getUsername: function () {
-      return Meteor.user().profile.name;
-    },
-    //Get points that a user has
-    getPointsByUser: function () {
-      return Tasks.find(
-        { checked: {$ne: false} }).count();
-    },
-    getProfilePoints: function () {
-      return Meteor.user().profile.score;
-    }, 
-    getLevel: function () {
-	    var curScore = Meteor.user().profile.score;
-    	return (Math.floor( curScore / 100) + 1)
+
+
+Template.homePageTemplate.events({
+  "click .challenges-share-done": function(event){
+    if(Session.get("showShareDone") == undefined){
+      Session.set("showShareDone","show");
+    }else{
+      Session.set("showShareDone",undefined);
     }
-});
 
-
-Template.profilePicture.helpers({
-    //Get current username
-    getProfilePicture: function () {
-      return Meteor.user().profile.picture;
-    }
-});
-
-
-Template.navigationBar.helpers({
-    homePage: function() {
-      if(Session.get("curPage") == undefined || Session.get("curPage") == "home" ){
-        return true;
-      }
-      return undefined;
-    },
-    aboutPage: function() {
-      if(Session.get("curPage") == "about" ){
-        return true;
-      }
-      return undefined;
-    }
-});
-
-Template.navigationBar.events({
-  "click .my-home": function(event){
-    Session.set("curPage","home");
   },
-  "click .my-about": function(event){
-    Session.set("curPage","about");
+  "click .twitter-task-done": function(event){
+    if(Session.get("showTwitterTask") == undefined){
+      Session.set("showTwitterTask","show");
+    }else{
+      Session.set("showTwitterTask",undefined);
+    }
   }
 });
 
-Template.body.events({
+
+Template.homePageTemplate.events({
   "submit .new-task": function(event){
     var text = event.target.text.value;
     Meteor.call("addTask", text);
     event.target.text.value = "";
 
     return false;
-  },
-  "change .hide-completed input": function (event){
-    Session.set("hideCompleted", event.target.checked);
   }
 });
 Template.task.events({

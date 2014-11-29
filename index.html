@@ -9,8 +9,6 @@
 <body>
 
 
-
-	{{#if currentUser}}
 		{{>navigationBar}}
 		{{>bannerImage}}
 		
@@ -18,77 +16,21 @@
 		<div class="max-width-1200">
 
 			{{#if homePage}}
-				<div class="col-md-8">
-					{{>profileInformationAndStats}}
-				</div>
-				<div class="col-md-3 col-md-offset-1">
-					{{>publicLeaderboard}}
-				</div>
-				<div class="padding-top-15 float-clear"></div>
-				
-
-
-				<form class="new-task">
-					<input type="text" name="text" placeholder="Type to add new tasks"/>
-				</form>
-				<div>
-					
-					<!-- SHOW TASKS TO BE DONE -->
-					<div class="col-md-6">
-						<h2 class="clear-padding-margin center-text block">Challenge yourself <i class="fa fa-level-up fa-fw"></i></h2>
-						<hr class="style-line clear-padding-margin"/>
-						<ul class="list-group list-special">
-							{{#each tasks}}
-								{{> task}}
-							{{/each}}
-						</ul>
-					</div>
-					<!-- SHOW TASKS COMPLETED-->
-					<div class="col-md-6">
-						<h2 class="clear-padding-margin center-text block">Tasks completed <i class="fa fa-check fa-fw"></i></h2>
-						<hr class="style-line clear-padding-margin"/>
-						<ul class="list-group list-special">
-							{{#each tasks}}
-								{{> taskDone}}
-							{{/each}}
-						</ul>
-
-					</div>
-				</div>
+				{{#if currentUser}}
+					{{>homePageTemplate}}
+				{{else}}
+					{{>loginPage}}
+				{{/if}}
+			{{/if}}
+			{{#if challengePage}}
+				{{>challengePageTemplate}}
 			{{/if}}
 			{{#if aboutPage}} 
 				{{>aboutInformation}}
 			{{/if}}
 		</div>
 
-			<!-- IF NO USER IS SIGNED IN -->
-		
-	{{else}}
-		{{>navigationBar}}
-		{{>bannerImage}}
-		
-		{{#if homePage}}
-		<div class="max-width-1200">
-			<div class="col-md-12">
-				<div class="center-div-step-1">
-	    			<div class="center-div-step-2">
-			    		<div>
-			    			{{>loginFacebook}}
-			       		</div>
-		     		</div>
-		   		</div>
-			</div>
-			<div class="padding-top-30 float-clear"></div>
-			<div class="col-md-8 col-md-offset-2">
-				{{>publicLeaderboard}}
-			</div>
-		</div>
-		{{/if}}
-		{{#if aboutPage}} 
-			{{>aboutInformation}}
-		{{/if}}
-		
-	{{/if}}
+		<div class="padding-top-30 float-clear"></div>
 </body>
 
 
@@ -113,6 +55,9 @@
 		<div class=" container btn-group" role="group">
 			<ul class="nav navbar-nav navbar-right">
 			    <li class="{{#if homePage}}active{{/if}} my-home"><a href="#" ><i class="fa fa-home fa-fw"></i> <span class="sr-only">(current)</span></a></li>
+			    {{#if currentUser}}
+			    <li class="{{#if challengePage}}active{{/if}} my-challenge"><a href="#">Challenges</a></li>
+			    {{/if}}
 			    <li class="{{#if aboutPage}}active{{/if}} my-about"><a href="#">About</a></li>
 			    {{#if currentUser}}
 					{{>logoutFacebook}}
@@ -120,209 +65,4 @@
 			</ul>
 		</div>
 	</nav>
-</template>
-
-<template name="profileInformationAndStats">
-		<!-- PROFILE PICTURE-->
-	<div class="col-md-6">
-		{{>profilePicture}}
-	</div>
-	<!-- NAMES AND STATS -->
-	<div class="col-md-6">
-		{{>nameAndStats}}
-	</div>
-	<div class="padding-top-15 float-clear"></div>
-
-</template>
-
-<template name="publicLeaderboard">
-	<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading"><strong>Public Leaderboard</strong></div>
-
-		<!-- Table -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Username</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>Pepo</td>
-					<td>Toro</td>
-					<td>@pepto</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td>Tiki</td>
-					<td>Lounge</td>
-					<td>@tkilng</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</template>
-
-<template name="friendsLeaderboard">
-	<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading"><strong>Friend's Leaderboard</strong></div>
-
-		<!-- Table -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Username</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</template>
-
-
-<!-- TEMPLATE FOR PROFILE PICTURE -->
-<!-- IMAGE NEEDS TO BE CHANGED FOR FACEBOOK PROFILE PICTURE -->
-<template name="profilePicture">
-	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:250px; width:auto;"/>
-</template>
-
-<!-- TEMPLATE FOR NAME AND STATISTICS -->
-<template name="nameAndStats">
-	<h1 class="clear-paddding-margin">{{getUsername}}</h1>
-	{{>shareInfo}}
-	<h4 class="clear-padding-margin" style="padding-left:{{percentageDone}}%"><strong>{{getProfilePoints}} Altrupoints</strong></h4>
-	<h5 class="clear-padding-margin">Level {{getLevel}}</h5>
-
-	<div class="padding-top-10 float-clear"></div>
-	{{>expProgressBar}}
-</template>
-
-<template name="shareInfo">
-	<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-	{{#if hastwitterAccount}}
-		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a> {{myTwitterId}}  <a class="btn btn-social-icon glyphicon glyphicon-refresh" id="RefreshTweets"></a>
-	{{else}}
-		{{#if isAddingTwitterId}}
-			{{> EnterTwitterId}}
-		{{else}}
-			<button type="button" class="btn btn-default" id="addTwitter">Add twitter account (+20)</button>
-		{{/if}}
-
-	{{/if}}
-</template>
-
-<!-- TEMPLATE FOR PROGRESS BAR INFORMATION-->
-<template name="expProgressBar">
-	<h6 class="text-left col-md-6 clear-padding-margin">0</h6>
-	<h6 class="text-right col-md-6 clear-padding-margin">100</h6>
-	<div class="progress col-md-12 clear-padding-margin">
-	  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{percentageDone}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentageDone}}%;">
-	    {{percentageDone}}%
-	  </div>
-	</div>
-
-</template>
-
-
-<template name="aboutInformation">
-	<div class="col-md-8">
-		<h2>What is VirtualAltruist?</h2>
-		<p>VirtualAltruist is a platform designed to help you develop, organize, and share your online activism profile. Using your historical activity on social media, VirtualAltruist gives you an Altrupoints score indicating how active you have been in promoting social causes. Completing a variety of challenges like the ALS Ice Bucket Challenge, sharing a tweet by your favorite charity, or donating money to organizations that promote social good can all help build up your Altrupoints. Compete with your Facebook friends to reach the top of our Altrupoints leaderboard, and share your current level of Altrupoints to encourage your social network to promote social causes! </p>
-                <h2>How it works</h2>
-                <p>The first time you log in to VirtualAltruist, the platform scans your tweet history for a set of keywords that indicate you promoted a social cause. Each tweet promoting a social cause gives you a small amount of Altrupoints to get you started. To build up your Altrupoints from there, you can complete any of the challenges posted on the main VirtualAltruist page. These challenges range from liking a charity’s Facebook Page (+5 Altrupoints) to spending time viewing ads to generate money for charity (+10 Altrupoints per click). Every time you log back in to VirtualAltruist, we scan your Twitter for new posts promoting social causes and give you Altrupoints for them. <br><br>A primary goal for VirtualAltruist is to take advantage of enthusiasm for online activism to generate money for social causes, increasing the real-world impact of online activists like you. While promoting social causes through Facebook or Twitter is a great first step, we have designed a model to help you directly raise revenue for these causes by clicking on advertisements. For each click, the advertiser donates money to charity, and you earn more Altrupoints.</p>   
-                <h2>Future Directions</h2>
-                <p>VirtualAltruist is currently in the prototype stage, but we have a lot of exciting plans for expanding it in the future. With Facebook’s approval, we will be able to scan your Facebook history in addition to Twitter, in order to build your baseline Altrupoints score. We also hope to expand and improve upon our method for giving Altrupoints for historical activism on social media. Lastly, we hope to partner with a variety of advertisers and charities to turn the money-generating aspect of the platform from a prototype to reality.</p> 
-        </div>
-	<div class="col-md-4">
-		{{>publicLeaderboard}}
-	</div>
-
-</template>
-
-
-
-<!-- TEMPLATE FOR TASKS THAT ARE DONE -->
-<template name="taskDone">
-	{{#if checked}}
-	<li class="list-group-item">
-		<span class="badge">1<i class="fa fa-plus fa-fw"></i></span>
-		<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-		<span class="clear-padding-margin">{{username}} - {{text}}</span>
-	</li>
-	{{/if}}
-</template>
-
-
-<template name="autoTweets">
-	{{#if checked}}
-	<li class="list-group-item">
-		<span class="badge">1<i class="fa fa-plus fa-fw"></i></span>
-		<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-		<span class="clear-padding-margin">{{username}} - {{text}}</span>
-	</li>
-	{{/if}}
-</template>
-
-
-<!-- TEMPLATE FOR TASKS-->
-<template name="task">
-	{{#unless checked}}
-		<li class="list-group-item">
-			<span class="badge">1<i class="fa fa-plus fa-fw"></i></span>
-			<button class="delete">&times;</button>
-
-			<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-			{{#if isOwner}}
-			<button class="toggle-private">
-			{{#if private}}
-			Private
-			{{else}}
-			Public
-			{{/if}}
-			</button>
-			{{/if}}
-
-			<span class="text"><strong>{{username}}</strong> - {{text}}</span>
-		</li>
-  	{{/unless}}
 </template>
