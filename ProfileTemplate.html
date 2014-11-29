@@ -1,4 +1,13 @@
-
+<template name="miniProfileInformationAndStats">
+		<!-- PROFILE PICTURE-->
+	<div class="col-md-2">
+		{{>miniProfilePicture}}
+	</div>
+	<!-- NAMES AND STATS -->
+	<div class="col-md-10">
+		{{>miniNameAndStats}}
+	</div>
+</template>
 
 <template name="profileInformationAndStats">
 		<!-- PROFILE PICTURE-->
@@ -18,6 +27,11 @@
 	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:250px; width:auto;"/>
 </template>
 
+<!-- TEMPLATE FOR PROFILE PICTURE -->
+<template name="miniProfilePicture">
+	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:50px; width:auto;"/>
+</template>
+
 <!-- TEMPLATE FOR NAME AND STATISTICS -->
 <template name="nameAndStats">
 	<h1 class="clear-paddding-margin">{{getUsername}}</h1>
@@ -27,6 +41,13 @@
 
 	<div class="padding-top-10 float-clear"></div>
 	{{>expProgressBar}}
+</template>
+
+<!-- TEMPLATE FOR NAME AND STATISTICS -->
+<template name="miniNameAndStats">
+	<h3 class="clear-paddding-margin align-left" style="margin-top:0px;"><strong>{{getUsername}}</strong></h3>
+	<h4 class="clear-padding-margin">{{getProfilePoints}} Altrupoints</h4>
+
 </template>
 
 <template name="shareInfo">

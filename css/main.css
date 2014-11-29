@@ -297,6 +297,6 @@ hr.style-line {
 
 /* clear padding and margin from element */
 .clear-padding-margin {
-  padding: 0;
-  margin: 0;
+  padding: 0 !important;
+  margin: 0 !important;
 }

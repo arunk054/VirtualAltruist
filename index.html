@@ -22,6 +22,9 @@
 					{{>loginPage}}
 				{{/if}}
 			{{/if}}
+			{{#if challengePage}}
+				{{>challengePageTemplate}}
+			{{/if}}
 			{{#if aboutPage}} 
 				{{>aboutInformation}}
 			{{/if}}
@@ -52,6 +55,9 @@
 		<div class=" container btn-group" role="group">
 			<ul class="nav navbar-nav navbar-right">
 			    <li class="{{#if homePage}}active{{/if}} my-home"><a href="#" ><i class="fa fa-home fa-fw"></i> <span class="sr-only">(current)</span></a></li>
+			    {{#if currentUser}}
+			    <li class="{{#if challengePage}}active{{/if}} my-challenge"><a href="#">Challenges</a></li>
+			    {{/if}}
 			    <li class="{{#if aboutPage}}active{{/if}} my-about"><a href="#">About</a></li>
 			    {{#if currentUser}}
 					{{>logoutFacebook}}

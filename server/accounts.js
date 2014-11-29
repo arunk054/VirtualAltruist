@@ -18,6 +18,8 @@
 	        options.profile.picture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?width=300&height=300";
 	        options.profile.score = 0;
 	        options.profile.twitterId = "";
+	        options.profile.first_name = user.services.facebook.first_name;
+	        options.profile.last_name = user.services.facebook.last_name;
 	        user.profile = options.profile;
 	    }
 	    return user;

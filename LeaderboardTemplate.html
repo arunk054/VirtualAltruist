@@ -1,6 +1,6 @@
 
 <template name="publicLeaderboard">
-	<div class="panel panel-default">
+	<div class="panel panel-default panel-success">
 		<!-- Default panel contents -->
 		<div class="panel-heading"><strong>Public Leaderboard</strong></div>
 
@@ -15,7 +15,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{#each leaderUser}}
+				{{#each addIndex leaderUser}}
 					{{>userLeaderTable}}
 				{{/each}}
 			</tbody>
@@ -26,9 +26,9 @@
 <template name="userLeaderTable">
 	<tr>
 		<td>{{index}}</td>
-		<td>{{services.facebook.first_name}}</td>
-		<td>{{services.facebook.last_name}}</td>
-		<td>{{profile.score}}</td>
+		<td>{{data.profile.first_name}}</td>
+		<td>{{data.profile.last_name}}</td>
+		<td>{{data.profile.score}}</td>
 	</tr>
 </template>
 
