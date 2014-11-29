@@ -56,5 +56,11 @@ TweetWords.insert({
 	word: "lesbian"
 });
 
+TweetWords.insert({
+	word: "@BlindAlive"
+});
+
+
+
 });
 

@@ -1,44 +1,3 @@
-TweetWords =  new Mongo.Collection("twitter_words");
-
-
-
-var searchTweet = function(twitterId, query) {
-	console.log("Searching Tweet for word: "+query);
-	
-//            Twit.get('statuses/user_timeline', { screen_name:'jeffbigham', count: 3 }, function(err, result) {
-	// Twit.get('search/tweets', {q:query, from:twitterId, count: 3 }, function(err, result) {
-// 		if (err) {
-// 			console.log("Error", err);
-// 			errOut = err;
-// 			wrappedInsert(err);
-// 		} else {
-// 			wrappedInsert(result);
-// 			console.log(result);
-// 			resultOut = result;
-// 		
-// 		}
-// 	});
-}
-
-
-var addTweets =  function(twitterId) {
-	resultOut = null;
-	errOut = null;
-	console.log("Adding Tweets for TwitterID: "+twitterId);
-	
-	//For each word in TweetWords
-	var words = TweetWords.find();
-	words.forEach(
-		function(element, index, array) {
-			console.log(element.word);
-			searchTweet(twitterId,element.word);
-		}
-	);
-	Session.set('loadingTweets',false);
-	
-}
-
-
 
 Template.shareInfo.events({
 
@@ -62,7 +21,12 @@ Template.shareInfo.events({
     	}
     	Session.set('loadingTweets',true);
     	//add tweets
-		addTweets(Meteor.user().profile.twitterId);
+		Meteor.call('addTweets',Meteor.user().profile.twitterId, function(err,result) {
+			if (err != undefined) {
+				alert("Error: "+err.reason);
+			}			
+			Session.set('loadingTweets',false);
+		});
     }
 });
 

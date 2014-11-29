@@ -293,6 +293,17 @@
 </template>
 
 
+<template name="autoTweets">
+	{{#if checked}}
+	<li class="list-group-item">
+		<span class="badge">1<i class="fa fa-plus fa-fw"></i></span>
+		<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+		<span class="clear-padding-margin">{{username}} - {{text}}</span>
+	</li>
+	{{/if}}
+</template>
+
+
 <!-- TEMPLATE FOR TASKS-->
 <template name="task">
 	{{#unless checked}}
