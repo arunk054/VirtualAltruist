@@ -56,8 +56,7 @@
 					points+= (2*statuses[i].favorite_count);
 					//console.log(Meteor.userId());
 					//var record = {id:Meteor.user};
-					console.log(statuses[i].text);
-					console.log(points);
+					console.log("Found: "+ statuses[i].text + " "+points);
 					newScore+=points;
 					var tweet = {
      					task_id: statuses[i].id_str,
@@ -89,6 +88,7 @@
 	var statuses=[];
 	var newScore = 0;
 	var errorMessage = '';
+	var lastId = '';
 
     var getUserTimeline = function(twitterId, lastTwitterId, max_id, words, userId) {
 
@@ -96,6 +96,8 @@
 		
 		Twit.get('statuses/user_timeline', {max_id:max_id, since_id:lastTwitterId, screen_name:twitterId, exclude_replies:true, include_rts:true, count:200}, function(err, result) {
 			curTwitterCalls++;
+			//If second time remove first element
+			
 			var callingAgain = false;
 			if (err) {
 				//We could throw error, but need to set all waitArray to true and throw error
@@ -103,7 +105,13 @@
 				console.log("Error in search Tweets: ", err);
 			} else {				
 				//console.log(result);
- 				statuses = statuses.concat(result);
+				console.log(result.length);
+				if (curTwitterCalls > 1) {
+					temp = result.length - 1;
+					result = result.splice(1,temp);				
+					console.log(result.length);
+				}
+				statuses = statuses.concat(result);			
 
 				console.log('Statuses Len: '+statuses.length);
 				
@@ -112,16 +120,17 @@
 					if (curSinceId == undefined ){
 						curSinceId = result[0].id_str;
 					}
-					nextMaxId = Number(result[result.length - 1].id_str) - 1;
-					
+
+//					nextMaxId = Number(result[result.length - 1].id_str) - 1;
+					nextMaxId = result[result.length - 1].id_str;					
 					callingAgain = true;
-					if (curTwitterCalls < maxTwitterCalls) {
-						getUserTimeline(twitterId,lastTwitterId, nextMaxId, words, userId);
-					} else {
-						checkAndUpdate(words, userId);
-					}
-				
 				}
+				if (curTwitterCalls < maxTwitterCalls && callingAgain == true) {
+					getUserTimeline(twitterId,lastTwitterId, nextMaxId, words, userId);
+				} else {
+					checkAndUpdate(words, userId);
+				}
+				
 			}
 			if (statuses.length == 0) {
 				//cannot throw exception here.
@@ -140,7 +149,7 @@
     	console.log("Searching Tweet for word: "+query);
 
 		
-		Twit.get('search/tweets', {q:query, since:sinceTime, until:timeStamp, from:twitterId, include_rts:true, count: 25 }, function(err, result) {
+		Twit.get('search/tweets', {q:query, since:sinceTime, until:timeStamp, from:twitterId, include_rts:true, count: 200 }, function(err, result) {
 			if (err) {
 				//We could throw error, but need to set all waitArray to true and throw error
 				//For now just log the error			
