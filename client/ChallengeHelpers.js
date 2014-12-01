@@ -1,7 +1,29 @@
+get_tasks_done_id = function(){
+        var task_done = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}).fetch();
+        var id_tasks = [];
+        for (var i = 0; i< task_done.length; i++){
+            id_tasks[i] = task_done[i].completed_task_id;
+        }
+        return id_tasks;
+    }
+
+
+get_tasks_incompleted_id = function(){
+    var task_done_id = get_tasks_done_id();
+    var tasks_incompleted = pred_task.find({task_id: {$nin: task_done_id}}).fetch();
+    var id_tasks = [];
+    for (var i = 0; i< tasks_incompleted.length; i++){
+        id_tasks[i] = tasks_incompleted[i].task_id;
+    }
+    return id_tasks;
+}
+
 
 
 Template.challengePageTemplate.helpers({
     isNotFirst: function(){
+        var tasks_incompleted = get_tasks_incompleted_id();
+        console.log(tasks_incompleted);
         if(Session.get("challengeIndex") == 0){
             return false;
         }
@@ -9,7 +31,7 @@ Template.challengePageTemplate.helpers({
     },
     isNotLast: function(){
         
-        if(Session.get("challengeIndex") < pred_task.find({}).count()-1){
+        if(Session.get("challengeIndex") < get_tasks_incompleted_id().length-1){
             return true;
         }
         return false;
@@ -19,20 +41,21 @@ Template.challengePageTemplate.helpers({
 Template.shareTask.helpers({
     hastwitterAccount: function() { return Meteor.user().profile.twitterId != ""; },
     getOrganization: function(){
-        var task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
-        return task[Session.get("challengeIndex")].organization;
+        console.log(get_tasks_incompleted_id()[Session.get("challengeIndex")]);
+        return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).organization;
+    },    
+    getOrganizationImage: function(){
+        console.log(get_tasks_incompleted_id()[Session.get("challengeIndex")]);
+        return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).organization_image;
     },
     getTask: function(){
-        var task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
-        return task[Session.get("challengeIndex")].challenge_text;
+        return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).challenge_text;
     },
     getURL: function(){
-        var task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
-        return task[Session.get("challengeIndex")].link;
+        return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).link;
     },
     getSharePoints: function(){
-        var task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
-        return task[Session.get("challengeIndex")].points;
+        return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).points;
     }
 });
 
@@ -46,17 +69,17 @@ Template.challengePageTemplate.events({
 });
 Template.shareTask.events({
     "click #facebook-share-task": function () {
-        var  task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
+        var task_shared = pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]});
         FB.ui({
             method: 'feed',
-            link: task[Session.get("challengeIndex")].link,
-            caption: task[Session.get("challengeIndex")].share_text
+            link: task_shared.link,
+            caption: task_shared.share_text
           },
           function(response) {
             if (response && !response.error_code) {
-                var  task = pred_task.find({}, {sort: {createdAt: -1}}).fetch();
-                var newScore = Meteor.user().profile.score + task[Session.get("challengeIndex")].points;
+                var newScore = Meteor.user().profile.score + task_shared.points;
                 Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.score": newScore}} );
+                Meteor.call("addCompletedTask", task_shared , "share");
             } else {
               alert('Error while posting.');
             }

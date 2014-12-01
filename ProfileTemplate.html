@@ -17,6 +17,8 @@
 	<!-- NAMES AND STATS -->
 	<div class="col-md-6">
 		{{>nameAndStats}}
+		<div class="padding-top-15 float-clear"></div>
+		<button type="button" class="btn btn-default do-some-challenge">I want more Altrupoints! Challenge yourself</button>
 	</div>
 	<div class="padding-top-15 float-clear"></div>
 
@@ -24,12 +26,12 @@
 
 <!-- TEMPLATE FOR PROFILE PICTURE -->
 <template name="profilePicture">
-	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:250px; width:auto;"/>
+	<img src="{{getProfilePicture}}" alt="profile" class="img-rounded center block" style="height:250px; width:auto;"/>
 </template>
 
 <!-- TEMPLATE FOR PROFILE PICTURE -->
 <template name="miniProfilePicture">
-	<img src="{{getProfilePicture}}" alt="bears" class="img-rounded center block" style="height:50px; width:auto;"/>
+	<img src="{{getProfilePicture}}" alt="profile" class="img-rounded center block" style="height:50px; width:auto;"/>
 </template>
 
 <!-- TEMPLATE FOR NAME AND STATISTICS -->

@@ -31,9 +31,14 @@
 
 
 <template name="shareTask">
-	<h2>{{getOrganization}}</h2>
-	<p>{{getTask}}</p>
-	<a href="{{getURL}}" target="_blank">{{getURL}}</a>
+	<div class="col-md-8">
+		<h2>{{getOrganization}}</h2>
+		<p>{{getTask}}</p>
+		<a href="{{getURL}}" target="_blank">{{getURL}}</a>
+	</div>
+	<div class="col-md-4">
+		<img src="{{getOrganizationImage}}" alt="profile" class="img-rounded center block" style="height:100px; width:auto;"/>
+	</div>
 	<div class="padding-top-15 float-clear"></div>
 	<div class="btn-group pull-right" role="group">
 				<a id="facebook-share-task" class="btn btn-facebook btn-sm "><i class="fa fa-facebook"> | Share (+{{getSharePoints}})</i></a>

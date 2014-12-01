@@ -66,3 +66,9 @@ Template.miniProfilePicture.helpers({
     }
 });
 
+Template.profileInformationAndStats.events({
+  "click .do-some-challenge": function(event){
+    Session.set("curPage","challenge");
+  }
+});
+

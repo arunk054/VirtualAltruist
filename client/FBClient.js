@@ -32,8 +32,7 @@
 		    if (error) {
 		        return console.log(error);
 		    }else{
-          homePage = true;
-        }
+        	}
 		});
   	}
 
@@ -43,8 +42,8 @@
   	"click #logout": function(e,tmpl){
   		Meteor.logout(function(err) {
 			  if (err){
-			  	Session.set("curPage","home");
 			  }else{
+			  	Session.set("curPage","home");
 			  	//everything good
 			  }
 		});
