@@ -86,6 +86,9 @@ Template.homePageTemplate.helpers({
     getAutoTweetsPoints: function() {
     	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()});
     	score = 0;
+    	if (Meteor.user().profile.twitterId != null && Meteor.user().profile.twitterId != undefined){
+    		score += PointsForTwitter;
+    	}
 		autoTweets.forEach(
 			function(element, index, array) {
 				score += element.points_task;
