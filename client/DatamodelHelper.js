@@ -1,4 +1,5 @@
 
+AutoTweets = new Mongo.Collection("auto_tweets");
 
 // Add insert, update operations to the collections.
 

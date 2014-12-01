@@ -12,13 +12,19 @@
 		<div class="col-md-11 col-md-offset-1">
 			<ul class="nav nav-tabs">
 				<li role="presentation" class="{{#if challengeTab}}active{{/if}}"><a class="text-success challenge-tab">Challenges <i class="fa fa-plus fa-fw"></i>{{getShareTaskPoints}}</a></li>
-				<li role="presentation" class="{{#if twitterTab}}active{{/if}}"><a class="text-success twitter-tab">Twitter <i class="fa fa-plus fa-fw"></i>0</a></li>
+				<li role="presentation" class="{{#if twitterTab}}active{{/if}}"><a class="text-success twitter-tab">Twitter <i class="fa fa-plus fa-fw"></i>{{getAutoTweetsPoints}}</a></li>
 			</ul>
 			{{#if challengeTab}}
 				{{#each getShareTasksByUser}}
 					{{> taskShareDoneDiv}}
 				{{/each}}
 			{{/if}}
+			{{#if twitterTab}}
+				{{#each getAutoTweetsByUser}}
+					{{> TweetsMinedDiv}}
+				{{/each}}
+			{{/if}}
+
 		</div>
 	</div>
 </template>

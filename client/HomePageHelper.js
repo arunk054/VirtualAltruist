@@ -67,6 +67,31 @@ Template.homePageTemplate.helpers({
     		list_completed[i] = {data_task: info_task, type_task: tasks_completed_user[i].type_task};
     	}
     	return list_completed;
+    },
+    getAutoTweetsByUser : function(){
+    	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()}, {sort: {createdAt: -1}});
+    	var returnArr = [];
+    	var twitterId = Meteor.user().profile.twitterId;
+		autoTweets.forEach(
+			function(element, index, array) {
+				var obj = element;
+				obj.link = "http://twitter.com/"+twitterId+"/status/"+element.task_id;
+				obj.word = obj.word.toUpperCase();
+				returnArr = returnArr.concat(obj);
+			}
+		);
+		console.log(returnArr);
+		return returnArr;
+    },
+    getAutoTweetsPoints: function() {
+    	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()});
+    	score = 0;
+		autoTweets.forEach(
+			function(element, index, array) {
+				score += element.points_task;
+			}
+		);
+		return score;
     }
   });
 
