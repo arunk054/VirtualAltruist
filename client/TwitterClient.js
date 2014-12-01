@@ -20,13 +20,14 @@ Template.shareInfo.events({
     		return;
     	}
     	Session.set('loadingTweets',true);
-    	//add tweets
-		Meteor.call('addTweets',Meteor.user().profile.twitterId, function(err,result) {
+
+		Meteor.call('addTweets',Meteor.user().profile.twitterId, Meteor.user().profile.timeStamp, Meteor.user().profile.sinceId, Meteor.user()._id, function(err,result) {
 			if (err != undefined) {
 				alert("Error: "+err.reason);
 			}			
 			Session.set('loadingTweets',false);
-		});
+		});					
+    	
     }
 });
 

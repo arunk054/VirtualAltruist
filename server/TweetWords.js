@@ -6,17 +6,19 @@ Meteor.startup(function () {
 
 TweetWords.remove({});
 
+//All characters should be in lowercase
+
 TweetWords.insert({
 //id: 0,
-	word: "ALS"
+	word: "#als"
 });
 
 TweetWords.insert({
-	word: "Human Rights"
+	word: "human rights"
 });
 
 TweetWords.insert({
-	word: "Ferguson"
+	word: "ferguson"
 });
 
 TweetWords.insert({
@@ -24,7 +26,7 @@ TweetWords.insert({
 });
 
 TweetWords.insert({
-	word: "HRC"
+	word: "hrc"
 });
 
 TweetWords.insert({
@@ -33,7 +35,7 @@ TweetWords.insert({
 
 
 TweetWords.insert({
-	word: "Red Cross"
+	word: "red cross"
 });
 
 TweetWords.insert({
@@ -57,7 +59,7 @@ TweetWords.insert({
 });
 
 TweetWords.insert({
-	word: "@BlindAlive"
+	word: "blindalive"
 });
 
 

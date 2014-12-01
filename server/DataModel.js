@@ -1,4 +1,4 @@
-TwitterPosts =  new Mongo.Collection("twitter_posts");
+AutoTweets =  new Mongo.Collection("auto_tweets");
 
 
 Meteor.users.allow({

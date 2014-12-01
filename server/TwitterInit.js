@@ -8,30 +8,129 @@
 	});
 
 	var wrappedInsert = Meteor.bindEnvironment(function(tweet) {
-   	 	TwitterPosts.insert(tweet);
-  	}, "Failed to insert tweet into Posts collection.");
+   	 	AutoTweets.insert(tweet);
+  	}, "Failed to insert tweet into collection.");
+  	 
+  	 var wrappedUpdateSinceId = Meteor.bindEnvironment(function(userId, sinceId, timeStamp) {
+  	 	console.log('Updating for userId:'+userId);
+		var curScore = Meteor.user().profile.score + newScore;
+		console.log("new score:"+curScore);
+  	 	Meteor.users.update({_id:userId},{$set:{"profile.sinceId":sinceId, "profile:timeStamp":timeStamp, "profile.score":curScore}});
+  	 },"Error updating sinceid, score , timestamp");
+
+
+  	   	   	 
+    var checkAndUpdate = function (words, userId) {
+			len = statuses.length;
+			console.log('Check and Update: '+statuses.length);
+			for (i = 0; i < len; ++i ) {
+			//For each word
+			var  num = words.length;
+			for (j = 0; j < num; ++j) {
+				//store - id, tweet, word, points, #retweets, #favorites
+				if (statuses[i].text.toLowerCase().indexOf(words[j]) != -1) {
+					//Check if RT
+					var points = 10;
+					if (statuses[i].text.indexOf('RT') == 0) {
+						points=5;
+					} else {
+						points+= (2*statuses[i].retweet_count);
+					}
+					points+= (2*statuses[i].favorite_count);
+					//console.log(Meteor.userId());
+					//var record = {id:Meteor.user};
+					console.log(statuses[i].text);
+					console.log(points);
+					newScore+=points;
+					var tweet = {};
+					//wrappedInsert();
+					break;
+					
+				}
+			}
+		}
+		
+		if (curSinceId != undefined) {
+			wrappedUpdateSinceId(userId, curSinceId, getCurrentTimeStamp());
+		} 
+
+		waitVar = false;
+	}
     
+    var curSinceId = undefined;
+	var maxTwitterCalls = 5;
+	var curTwitterCalls = 0;
+	var statuses=[];
+	var newScore = 0;
+
+    var getUserTimeline = function(twitterId, lastTwitterId, max_id, words, userId) {
+
+
+		console.log('Calling get User Timeline:' + max_id+ " sinceId : "+ lastTwitterId);
+		
+		Twit.get('statuses/user_timeline', {max_id:max_id, since_id:lastTwitterId, screen_name:twitterId, exclude_replies:true, include_rts:true, count:200}, function(err, result) {
+			curTwitterCalls++;
+			var callingAgain = false;
+			if (err) {
+				//We could throw error, but need to set all waitArray to true and throw error
+				//For now just log the error			
+				console.log("Error in search Tweets: ", err);
+			} else {				
+				//console.log(result);
+ 				statuses = statuses.concat(result);
+
+				console.log('Statuses Len: '+statuses.length);
+				
+				if (result.length > 0 ) {
+				
+					if (curSinceId == undefined ){
+						curSinceId = result[0].id_str;
+					}
+					nextMaxId = Number(result[result.length - 1].id_str) - 1;
+					
+					callingAgain = true;
+					if (curTwitterCalls < maxTwitterCalls) {
+						getUserTimeline(twitterId,lastTwitterId, nextMaxId, words, userId);
+					} else {
+						checkAndUpdate(words, userId);
+					}
+				
+				}
+			}
+			if (callingAgain == false) {
+				waitVar = false;
+			}
+
+		}
+		);
+    
+    
+    }
 
     var searchTweet = function(twitterId, query,sinceTime, timeStamp, index) {
     	console.log("Searching Tweet for word: "+query);
 
-		Twit.get('search/tweets', {q:query, since:sinceTime, until:timeStamp, from:twitterId, count: 25 }, function(err, result) {
+		
+		Twit.get('search/tweets', {q:query, since:sinceTime, until:timeStamp, from:twitterId, include_rts:true, count: 25 }, function(err, result) {
 			if (err) {
 				//We could throw error, but need to set all waitArray to true and throw error
 				//For now just log the error			
 				console.log("Error in search Tweets: ", err);
 			} else {
+				//store - id, tweet, word, points, #retweets, #favorites
 //				wrappedInsert(result);
 //				console.log(result);
-				var statuses = result.statuses;
+ 				var statuses = result.statuses;
 				var  len = statuses.length;
 				var i = 0;
 				console.log('Tweets for word: '+query);
 				for (i = 0; i < len; ++i ) {
 					console.log(statuses[i].text);
+					console.log(statuses[i].retweet_count);
+					console.log(statuses[i].favorite_count);					
 				}
 				
-//				console.log("Retrieved Tweet: "+ result.text);
+
 			}
 			
 			//Set the array to false
@@ -61,6 +160,8 @@ var getCurrentTimeStamp = function() {
 	
 }
 
+	var waitVar = false;
+	
     var waitArray = [];
     var checkArray = function() {
     	var isWait = false;
@@ -83,45 +184,58 @@ var getCurrentTimeStamp = function() {
         getTweets: function (twitterId, str) {
 			//Do nothing, backward compatibility
         },
-        
-        addTweets: function(twitterId, timeStamp) {
+        addTweets: function(twitterId,timeStamp, lastTwitterId, userId) {
+			console.log('Add tweets');
+			console.log(userId);
+			console.log(twitterId);
+			console.log(lastTwitterId);
+			console.log('end  params');
 			resultOut = null;
         	errOut = null;
-        	if (checkArray() == true) {
+//         	if (checkArray() == true) {
+         	if (waitVar == true) {
         		throw new Meteor.Error(500,"Mining Twitter in Progress. Please wait...");
         	}
-        	console.log("Adding Tweets for TwitterID: "+twitterId);
+        	console.log("Adding Tweets for TwitterID: "+twitterId +" since id: "+lastTwitterId );
         	//initialize waitArray to false
-        	waitArray = [];
-        	count = TweetWords.find().count();
-        	for (i = 0; i < count; ++i) {
-        		waitArray = waitArray.concat(false);
-        	}
+//         	waitArray = [];
+//         	count = TweetWords.find().count();
+//         	for (i = 0; i < count; ++i) {
+//         		waitArray = waitArray.concat(false);
+//         	}
+			waitVar = true;
+
         	//For each word in TweetWords
         	var words = TweetWords.find();
-        	count = 0;
-			var sinceTime = timeStamp;
-        	if (timeStamp == undefined || timeStamp == '')
-        	{
-        		sinceTime = '2014-01-01';//Some default date
-				console.log('Timestamp is not defined - setting Since : '+sinceTime);
-				timeStamp = getCurrentTimeStamp()	;
-        		console.log('Setting timestamp to current Date: '+ timeStamp);
-        		
-        	}
-        	//If timestamp and since are same then subtract
-        	
-        	if (timeStamp == sinceTime) {
+        	var count = 0;
+			var curTime = getCurrentTimeStamp();
+        	//If timestamp and since are same then throw error, only if we dont have lastTwitterId
+        	if (timeStamp == curTime && lastTwitterId != undefined &&  lastTwitterId != null ) {
         		throw new Meteor.Error(500, "Already mined twitter feed for "+twitterId+", try again tommorrow..");
         	}
-        	
+        	var wordValues = [];
         	words.forEach(
         		function(element, index, array) {
-        			console.log('Twitter word: '+element);
-        			searchTweet(twitterId, element.word, sinceTime, timeStamp, count);
-        			count++;
+        			wordValues = wordValues.concat(element.word);
         		}
         	);
+			 curSinceId = undefined;
+			 curTwitterCalls = 0;
+			 statuses=[];
+			 newScore = 0;
+			if (lastTwitterId == null | lastTwitterId == '')
+			{
+				lastTwitterId = undefined;
+			}
+        	getUserTimeline(twitterId, lastTwitterId, undefined, wordValues, userId);
+        	
+//         	words.forEach(
+//         		function(element, index, array) {
+//         			console.log('Twitter word: '+element);
+//         			searchTweet(twitterId, element.word, sinceTime, timeStamp, count);
+//         			count++;
+//         		}
+//         	);
         }
     });
     
