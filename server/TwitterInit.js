@@ -11,12 +11,29 @@
    	 	AutoTweets.insert(tweet);
   	}, "Failed to insert tweet into collection.");
   	 
-  	 var wrappedUpdateSinceId = Meteor.bindEnvironment(function(userId, sinceId, timeStamp) {
+  	 var wrappedUpdate = Meteor.bindEnvironment(function(userId, sinceId) {
   	 	console.log('Updating for userId:'+userId);
-		var curScore = Meteor.user().profile.score + newScore;
+  	 	var curUsers = Meteor.users.find({_id:userId});
+		if (curUsers == null || curUsers == undefined || curUsers.count()== 0){
+  	 	 	return;
+  	 	}
+  	 	var curScore = undefined;
+		curUsers.forEach(
+			function(element, index, array) {
+				if (curScore == undefined) {
+					curScore = element.profile.score;
+					//break does not work
+				}
+			}
+		);
+		console.log("Got curScore from DB: "+curScore);
+		if (curScore == undefined)
+			curScore = 0;
+		curScore += newScore;
 		console.log("new score:"+curScore);
-  	 	Meteor.users.update({_id:userId},{$set:{"profile.sinceId":sinceId, "profile:timeStamp":timeStamp, "profile.score":curScore}});
-  	 },"Error updating sinceid, score , timestamp");
+		
+  	 	Meteor.users.update({_id:userId},{$set:{"profile.sinceId":sinceId, "profile.score":curScore}});
+  	 },"Error updating sinceid, score ");
 
 
   	   	   	 
@@ -42,18 +59,27 @@
 					console.log(statuses[i].text);
 					console.log(points);
 					newScore+=points;
-					var tweet = {};
-					//wrappedInsert();
+					var tweet = {
+     					task_id: statuses[i].id_str,
+     					tweet: statuses[i].text,
+     					word: words[j],
+					  points_task: points,
+					  completed_by: userId,
+					  type_task: 'Twitter',
+					  createdAt: new Date(),
+					  retweets: statuses[i].retweet_count,
+					  favorites: statuses[i].favorite_count
+					};
+					wrappedInsert(tweet);
 					break;
-					
 				}
 			}
 		}
 		
 		if (curSinceId != undefined) {
-			wrappedUpdateSinceId(userId, curSinceId, getCurrentTimeStamp());
+			wrappedUpdate(userId, curSinceId);
 		} 
-
+		errorMessage = '';
 		waitVar = false;
 	}
     
@@ -62,9 +88,9 @@
 	var curTwitterCalls = 0;
 	var statuses=[];
 	var newScore = 0;
+	var errorMessage = '';
 
     var getUserTimeline = function(twitterId, lastTwitterId, max_id, words, userId) {
-
 
 		console.log('Calling get User Timeline:' + max_id+ " sinceId : "+ lastTwitterId);
 		
@@ -97,7 +123,10 @@
 				
 				}
 			}
-			if (callingAgain == false) {
+			if (statuses.length == 0) {
+				//cannot throw exception here.
+				console.log( "No new tweets found for @"+twitterId+", try again tommorrow..");
+				errorMessage = "No new tweets found for @"+twitterId+", try again tommorrow..";
 				waitVar = false;
 			}
 
@@ -193,26 +222,33 @@ var getCurrentTimeStamp = function() {
 			resultOut = null;
         	errOut = null;
 //         	if (checkArray() == true) {
+        	console.log("Adding Tweets for TwitterID: "+twitterId +" since id: "+lastTwitterId );
+
          	if (waitVar == true) {
         		throw new Meteor.Error(500,"Mining Twitter in Progress. Please wait...");
         	}
-        	console.log("Adding Tweets for TwitterID: "+twitterId +" since id: "+lastTwitterId );
-        	//initialize waitArray to false
+			if (errorMessage != '') {
+				newErrorMessage = errorMessage;
+				errorMessage = '';
+        		throw new Meteor.Error(500,newErrorMessage);
+        	}		
+
+        	//For each word in TweetWords
+        	var words = TweetWords.find();
+        	var count = 0;
+// 			var curTime = getCurrentTimeStamp();
+//         	//If timestamp and since are same then throw error, only if we dont have lastTwitterId
+//         	if (timeStamp == curTime && lastTwitterId != undefined &&  lastTwitterId != null ) {
+//         		throw new Meteor.Error(500, "Already mined twitter feed for @"+twitterId+", try again tommorrow..");
+//         	}
+        	
 //         	waitArray = [];
 //         	count = TweetWords.find().count();
 //         	for (i = 0; i < count; ++i) {
 //         		waitArray = waitArray.concat(false);
 //         	}
 			waitVar = true;
-
-        	//For each word in TweetWords
-        	var words = TweetWords.find();
-        	var count = 0;
-			var curTime = getCurrentTimeStamp();
-        	//If timestamp and since are same then throw error, only if we dont have lastTwitterId
-        	if (timeStamp == curTime && lastTwitterId != undefined &&  lastTwitterId != null ) {
-        		throw new Meteor.Error(500, "Already mined twitter feed for "+twitterId+", try again tommorrow..");
-        	}
+			
         	var wordValues = [];
         	words.forEach(
         		function(element, index, array) {
@@ -223,6 +259,7 @@ var getCurrentTimeStamp = function() {
 			 curTwitterCalls = 0;
 			 statuses=[];
 			 newScore = 0;
+			 errorMessage = '';
 			if (lastTwitterId == null | lastTwitterId == '')
 			{
 				lastTwitterId = undefined;

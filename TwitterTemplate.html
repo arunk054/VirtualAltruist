@@ -12,3 +12,22 @@
 		</form>				
 		</div>
 </template>
+
+
+<template name="TweetsMinedDiv">
+	<a href="{{data_task.link}}" target="_blank"><div class="square bg round-with-border" style="background-image:url({{data_task.organization_image}});">
+		<div class="bg_color_task">
+			<div class="content">
+	        	<!--<div class="table">
+		            <div class="table-cell">-->
+		            	<h1 class="pull-right text-gray clear-padding-margin"><i class="fa fa-plus fa-fw"></i>{{data_task.points}}</h1>
+		            	<div class="col-md-12">
+						<p class="lead text-gray-darker font-style-medium">{{data_task.challenge_text}}</p>
+						</div>
+
+					<!--</div>
+				</div>-->
+			</div>
+		</div>
+	</div></a>
+</template>
