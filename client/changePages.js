@@ -9,7 +9,7 @@ Template.navigationBar.helpers({
     challengePage: function() {
       if(Session.get("curPage") == "challenge" ){
         if(Session.get("challengeIndex") == undefined){
-          Session.set("challengeIndex",1);
+          Session.set("challengeIndex",0);
         }
         return true;
       }

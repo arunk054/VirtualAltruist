@@ -7,31 +7,18 @@
 	</div>
 	<div class="padding-top-15 float-clear"></div>
 	
-	<div>	
+	<div>
 
-		<!-- SHOW TASKS COMPLETED-->
-		<div class="col-md-5 col-md-offset-1">
-			<h2 class="clear-padding-margin center-text block">Tasks completed <i class="fa fa-check fa-fw"></i></h2>
-			<hr class="style-line clear-padding-margin"/>
-			<div class="list-group list-special">
-				<a class="list-group-item challenges-share-done">Share <span class="badge"><i class="fa fa-plus fa-fw"></i>{{getShareTaskPoints}}</span></a>
-				{{#if showShareDone}}
-				<div class="list-group list-special">
-					{{#each getShareTasksByUse}}
-						{{> taskShareDone}}
-					{{/each}}
-				</div>
-				{{/if}}
-				<a class="info list-group-item twitter-task-done">Twitter <span class="badge"><i class="fa fa-plus fa-fw"></i>21</span></a>
-				{{#if showTwitterDone}}
-				<div class="list-group list-special">
-					{{#each tasks}}
-						{{> taskDone}}
-					{{/each}}
-				</div>
-				{{/if}}
-			</div>
-
+		<div class="col-md-11 col-md-offset-1">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="{{#if challengeTab}}active{{/if}}"><a class="text-success challenge-tab">Challenges <i class="fa fa-plus fa-fw"></i>{{getShareTaskPoints}}</a></li>
+				<li role="presentation" class="{{#if twitterTab}}active{{/if}}"><a class="text-success twitter-tab">Twitter <i class="fa fa-plus fa-fw"></i>0</a></li>
+			</ul>
+			{{#if challengeTab}}
+				{{#each getShareTasksByUser}}
+					{{> taskShareDoneDiv}}
+				{{/each}}
+			{{/if}}
 		</div>
 	</div>
 </template>

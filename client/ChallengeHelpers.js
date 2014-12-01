@@ -18,12 +18,8 @@ get_tasks_incompleted_id = function(){
     return id_tasks;
 }
 
-
-
 Template.challengePageTemplate.helpers({
     isNotFirst: function(){
-        var tasks_incompleted = get_tasks_incompleted_id();
-        console.log(tasks_incompleted);
         if(Session.get("challengeIndex") == 0){
             return false;
         }
@@ -41,11 +37,9 @@ Template.challengePageTemplate.helpers({
 Template.shareTask.helpers({
     hastwitterAccount: function() { return Meteor.user().profile.twitterId != ""; },
     getOrganization: function(){
-        console.log(get_tasks_incompleted_id()[Session.get("challengeIndex")]);
         return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).organization;
     },    
     getOrganizationImage: function(){
-        console.log(get_tasks_incompleted_id()[Session.get("challengeIndex")]);
         return pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]}).organization_image;
     },
     getTask: function(){
@@ -80,8 +74,10 @@ Template.shareTask.events({
                 var newScore = Meteor.user().profile.score + task_shared.points;
                 Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.score": newScore}} );
                 Meteor.call("addCompletedTask", task_shared , "share");
+                if(Session.get("challengeIndex")>0){
+                    Session.set("challengeIndex", Session.get("challengeIndex")-1);
+                }
             } else {
-              alert('Error while posting.');
             }
           });
       }

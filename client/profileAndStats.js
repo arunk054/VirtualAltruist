@@ -4,11 +4,16 @@ Template.expProgressBar.helpers({
 //      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
     var curScore = Meteor.user().profile.score;
     return curScore%100;
-    },
-    //Total tasks saved
-    totalCount: function () {
-//      return Tasks.find().count();    
-    return Meteor.user().profile.score;
+    },    
+    getInitProgressBar: function () {
+//      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
+    var curScore = Meteor.user().profile.score;
+    return Math.floor( curScore / 100)*100;
+    },    
+    getEndProgressBar: function () {
+//      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
+    var curScore = Meteor.user().profile.score;
+    return Math.floor( curScore / 100)*100+100;
     },
 
 });

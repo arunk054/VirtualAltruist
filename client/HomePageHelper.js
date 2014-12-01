@@ -39,6 +39,18 @@ Template.homePageTemplate.helpers({
       }
       return undefined;
     },
+    challengeTab: function() {
+      if(Session.get("infoTab") == "challenge" || Session.get("infoTab") == undefined ){
+        return true;
+      }
+      return undefined;
+    },
+    twitterTab: function() {
+      if(Session.get("infoTab") == "twitter" ){
+        return true;
+      }
+      return undefined;
+    },
     getShareTaskPoints: function(){
     	var tasks = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}).fetch();
     	var totalPointsTask = 0;
@@ -47,8 +59,8 @@ Template.homePageTemplate.helpers({
     	}
     	return totalPointsTask;
     },
-    getShareTasksByUse: function(){
-    	var tasks_completed_user = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}).fetch();
+    getShareTasksByUser: function(){
+    	var tasks_completed_user = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}, {sort: {createdAt: -1}}).fetch();
     	var list_completed = [];
     	for (var i=0; i< tasks_completed_user.length; i++){
     		var info_task = pred_task.findOne({task_id:tasks_completed_user[i].completed_task_id});
@@ -77,7 +89,13 @@ Template.homePageTemplate.events({
     }
   },
   "click .do-some-challenge": function(event){
-  	Session.set("curPage","challenge");
+    Session.set("curPage","challenge");
+  },
+  "click .challenge-tab": function(event){
+    Session.set("infoTab","challenge");
+  },
+  "click .twitter-tab": function(event){
+    Session.set("infoTab","twitter");
   }
 });
 

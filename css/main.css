@@ -14,6 +14,67 @@ body {
 
   font-size: 14px;*/
 }
+.round-with-border {
+    border: 1px solid  #EEE;
+    border-radius: 10px;
+}
+.round-with-border:hover {
+    border: 1px solid  #BBB;
+    border-radius: 10px;
+}
+
+.text-gray-darker{
+  color: #222;
+}
+.text-gray{
+  color: #666;
+}
+.square {
+    float:left;
+    position: relative;
+    min-width: 300px;
+    min-height: 150px;
+    width: 25%;
+    padding-bottom : 25%; /* = width for a 1:1 aspect ratio */
+    margin:0.1%;
+    background-color:white;
+    overflow:hidden;
+}
+.bg_color_task{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color:rgba(255,255,255,0.7);
+}
+
+.bg_color_task:hover{
+  background-color:rgba(255,255,255,0.5);
+}
+
+.content {
+    position:absolute;
+    height:90%; /* = 100% - 2*5% padding */
+    width:90%; /* = 100% - 2*5% padding */
+    padding: 5%;
+    
+}
+.table{
+    display:table;
+    width:100%;
+    height:100%;
+}
+.table-cell{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.bg{
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    color:#fff;
+}
+
 
 .max-width-1200{
   max-width: 1200px;

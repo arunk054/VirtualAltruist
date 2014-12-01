@@ -10,6 +10,7 @@ Meteor.methods({
           points_task: task.points,
           completed_by: Meteor.userId(),
           type_task: task_type,
+          createdAt: new Date(),
         });
 
     }
