@@ -3,19 +3,18 @@ var refreshInterval;
 addTweetsClient = function() {
 		clearInterval(refreshInterval);
     	if (Session.get('loadingTweets') == true) {
-    		$('#RefreshTweets').addClass('fa-spin');
     		alert("Mining Twitter in Progress... Please wait... ");
-			$('#RefreshTweets').removeClass('fa-spin');
     		return;
     	}
     	Session.set('loadingTweets',true);
-		$('#RefreshTweets').addClass('fa-spin');
+
 		Meteor.call('addTweets',Meteor.user().profile.twitterId, Meteor.user().profile.timeStamp, Meteor.user().profile.sinceId, Meteor.user()._id, function(err,result) {
 			if (err != undefined) {
 				alert("Error: "+err.reason);
-			}			
+			}
+			$('#RefreshTweets').addClass('fa-spin');
 			Session.set('loadingTweets',false);
-			refreshInterval = setInterval(function(){isMiningTweets();}, 3000)
+			refreshInterval = setInterval(function(){isMiningTweets();}, 2000)
 		});					
 }
 

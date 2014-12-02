@@ -55,7 +55,7 @@
 <template name="shareInfo">
 	<a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
 	{{#if hastwitterAccount}}
-		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a> <span style="font-size:16px"> {{myTwitterId}}</span>  <a class="fa fa-refresh fa-spin" style="cursor:pointer;text-decoration:none;font-size:20px;" id="RefreshTweets"></a>
+		<a class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"> </i> </a> <span style="font-size:16px"> {{myTwitterId}}</span>  <a class="fa fa-refresh" style="cursor:pointer;text-decoration:none;font-size:20px;" id="RefreshTweets"></a>
 	{{else}}
 		{{#if isAddingTwitterId}}
 			{{> EnterTwitterId}}
