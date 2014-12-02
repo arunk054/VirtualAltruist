@@ -18,7 +18,8 @@
 	<div class="col-md-6">
 		{{>nameAndStats}}
 		<div class="padding-top-15 float-clear"></div>
-		<button type="button" class="btn btn-default do-some-challenge">Do some challenges</button>
+		<button type="button" class="btn btn-default btn-danger do-contribution">Contribute for a cause</button>
+		<button type="button" class="btn btn-default btn-danger do-some-challenge">Share a cause</button>
 	</div>
 	<div class="padding-top-15 float-clear"></div>
 
@@ -39,10 +40,11 @@
 	<h1 class="clear-paddding-margin">{{getUsername}}</h1>
 	{{>shareInfo}}
 	<h4><strong>{{getProfilePoints}} Altrupoints</strong></h4>
-	<h5 >Level {{getLevel}}</h5>
-
-	<div class="padding-top-10 float-clear"></div>
-	{{>expProgressBar}}
+	<a class="{{getLevelColor}} star-button" ><i class=" {{isFullStar 1}}"></i><i class="{{isFullStar 2}}"></i><i class="{{isFullStar 3}}"></i><i class="{{isFullStar 4}}"></i><i class="{{isFullStar 5}}"></i></a>
+	{{#if showProgressBar}}
+		<div class="padding-top-10 float-clear"></div>
+		{{>expProgressBar}}
+	{{/if}}
 </template>
 
 <!-- TEMPLATE FOR NAME AND STATISTICS -->
@@ -68,8 +70,8 @@
 
 <!-- TEMPLATE FOR PROGRESS BAR INFORMATION-->
 <template name="expProgressBar">
-	<h6 class="text-left col-md-6 clear-padding-margin">{{getInitProgressBar}}</h6>
-	<h6 class="text-right col-md-6 clear-padding-margin">{{getEndProgressBar}}</h6>
+	<h6 class="text-left col-md-6 clear-padding-margin">{{getInitProgressBar}}<i class="fa fa-star"></i></h6>
+	<h6 class="text-right col-md-6 clear-padding-margin">{{getEndProgressBar}}<i class="fa fa-star"></i></h6>
 	<div class="progress col-md-12 clear-padding-margin">
 	  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{percentageDone}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentageDone}}%;">
 	    {{percentageDone}}%

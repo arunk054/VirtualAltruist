@@ -14,6 +14,36 @@ body {
 
   font-size: 14px;*/
 }
+
+.bg_banner{
+  position: absolute;
+  background-image: url('/resources/BG-12.png');
+  background-size:cover;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.text-silver{
+  color: #C0C0C0;
+}
+.text-bronze{
+  color: #A67D3D;
+}
+.text-gold{
+  color: #FFD700;
+}
+
+.text-silver.star-button:hover{
+  color:#B0B0B0;
+}
+.text-bronze.star-button:hover{
+  color:#865D1D;
+}
+.text-gold.star-button:hover{
+  color:#EFC700;
+}
+
 .round-with-border {
     border: 1px solid  #EEE;
     border-radius: 10px;
@@ -45,6 +75,10 @@ body {
   height: 100%;
   width: 100%;
   background-color:rgba(255,255,255,0.7);
+}
+
+.bg_color_transparent{
+  background-color:rgba(255,255,255,0.8);
 }
 
 .bg_color_task:hover{
@@ -105,9 +139,12 @@ body {
 .banner-image {
   display: block;
   width:100%;
-  height:150px;
-  background-image:url('/resources/green_background.jpg');
-  background-size:cover;
+  margin-top: 50px;
+  height:100px;
+  background-image:url('/resources/BANNER-01.jpg');
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-color: #52669D;
 }
 
 /* determine how content should react */

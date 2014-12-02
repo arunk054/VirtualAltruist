@@ -1,8 +1,8 @@
 <template name="homePageTemplate">
-	<div class="col-md-8 col-md-offset-1">
+	<div class="col-md-7 col-md-offset-1">
 		{{>profileInformationAndStats}}
 	</div>
-	<div class="col-md-3 ">
+	<div class="col-md-4 ">
 		{{>publicLeaderboard}}
 	</div>
 	<div class="padding-top-15 float-clear"></div>
@@ -11,9 +11,15 @@
 
 		<div class="col-md-11 col-md-offset-1">
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="{{#if challengeTab}}active{{/if}}"><a class="text-success challenge-tab">Challenges <i class="fa fa-plus fa-fw"></i>{{getShareTaskPoints}}</a></li>
+				<li role="presentation" class="{{#if contributionTab}}active{{/if}}"><a class="text-success contribution-tab">Contribution <i class="fa fa-plus fa-fw"></i>{{getContTaskPoints}}</a></li>
+				<li role="presentation" class="{{#if challengeTab}}active{{/if}}"><a class="text-success challenge-tab">Share <i class="fa fa-plus fa-fw"></i>{{getShareTaskPoints}}</a></li>
 				<li role="presentation" class="{{#if twitterTab}}active{{/if}}"><a class="text-success twitter-tab">Twitter <i class="fa fa-plus fa-fw"></i>{{getAutoTweetsPoints}}</a></li>
 			</ul>
+			{{#if contributionTab}}
+				{{#each getContTasksByUser}}
+					{{> taskContDoneDiv}}
+				{{/each}}
+			{{/if}}
 			{{#if challengeTab}}
 				{{#each getShareTasksByUser}}
 					{{> taskShareDoneDiv}}

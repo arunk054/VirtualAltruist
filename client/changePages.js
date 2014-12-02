@@ -15,6 +15,15 @@ Template.navigationBar.helpers({
       }
       return undefined;
     },
+    contributionPage: function() {
+      if(Session.get("curPage") == "contribution" ){
+        if(Session.get("challengeIndex") == undefined){
+          Session.set("challengeIndex",0);
+        }
+        return true;
+      }
+      return undefined;
+    },
     aboutPage: function() {
       if(Session.get("curPage") == "about" ){
         return true;
@@ -36,6 +45,12 @@ Template.body.helpers({
       }
       return undefined;
     },
+    contributionPage: function() {
+      if(Session.get("curPage") == "contribution" ){
+        return true;
+      }
+      return undefined;
+    },
     aboutPage: function() {
       if(Session.get("curPage") == "about" ){
         return true;
@@ -52,6 +67,9 @@ Template.navigationBar.events({
   },  
   "click .my-challenge": function(event){
     Session.set("curPage","challenge");
+  },  
+  "click .my-contribution": function(event){
+    Session.set("curPage","contribution");
   },
   "click .my-about": function(event){
     Session.set("curPage","about");

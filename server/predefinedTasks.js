@@ -1,8 +1,41 @@
 Predefined_tasks = new Mongo.Collection("predefined_tasks");
+Predefined_cont_tasks = new Mongo.Collection("predefined_contribution_tasks");
 
 Meteor.startup(function () {
     // code to run on server at startup
     //
+    Predefined_cont_tasks.remove({});
+    Predefined_cont_tasks.insert({
+        task_id: 1,
+        share_text: "Check this university!",
+        challenge_text: "Share this university and you will be contributing on a good cause.",
+        contribution:0.25,
+        points: 50,
+        organization: "CMU",
+        organization_image: "https://lh6.googleusercontent.com/-okeIesObkW8/U3uvCTwY_gI/AAAAAAAAAns/c8R1D448aRs/s489-no/cmu-icon2.gif",
+        link: "http://www.cmu.edu/" 
+    });
+    Predefined_cont_tasks.insert({
+        task_id: 2,
+        share_text: "Check out this awesome course",
+        challenge_text: "Spread the word of this course, let the rest know what is the Social Web.",
+        contribution: 0.25,
+        points: 50,
+        organization: "Social Web",
+        organization_image: "http://ryonswebdesign.com/wp-content/uploads/2014/02/smm.png",
+        link: "http://socialweb.io/"
+    });
+    Predefined_cont_tasks.insert({
+        task_id: 3,
+        share_text: "Check out your own Altruist score!",
+        challenge_text: "View advertisements to generate donations to charity.", 
+        contribution: 0.25,
+        points: 50,
+        organization: "Virtual Altruist",
+        organization_image: "/resources/altruist.png",
+        link: "http://virtualaltruistdemo.meteor.com"
+    });
+
     Predefined_tasks.remove({});
     Predefined_tasks.insert({
         task_id: 1,
