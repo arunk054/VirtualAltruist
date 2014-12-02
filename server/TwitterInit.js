@@ -282,7 +282,13 @@ var getCurrentTimeStamp = function() {
 //         			count++;
 //         		}
 //         	);
+        },
+        
+        isWaiting: function() {
+        	console.log('waitVar:'+waitVar);
+			return waitVar;
         }
+        
     });
     
     
