@@ -1,3 +1,41 @@
+var refreshInterval;
+
+addTweetsClient = function() {
+		clearInterval(refreshInterval);
+    	if (Session.get('loadingTweets') == true) {
+    		$('#RefreshTweets').addClass('fa-spin');
+    		alert("Mining Twitter in Progress... Please wait... ");
+			$('#RefreshTweets').removeClass('fa-spin');
+    		return;
+    	}
+    	Session.set('loadingTweets',true);
+		$('#RefreshTweets').addClass('fa-spin');
+		Meteor.call('addTweets',Meteor.user().profile.twitterId, Meteor.user().profile.timeStamp, Meteor.user().profile.sinceId, Meteor.user()._id, function(err,result) {
+			if (err != undefined) {
+				alert("Error: "+err.reason);
+			}			
+			Session.set('loadingTweets',false);
+			refreshInterval = setInterval(function(){isMiningTweets();}, 3000)
+		});					
+}
+
+isMiningTweets = function() {
+		var isLoading = false;
+    	Meteor.call('isWaiting', function(err,result) {
+			if (err != undefined) {
+				isLoading == false;
+			}
+			if (result == true) {
+				isLoading = true;
+			}
+			if ( isLoading == false) {
+				$('#RefreshTweets').removeClass('fa-spin');
+			}
+		});
+
+
+    }
+
 
 Template.shareInfo.events({
 
@@ -12,22 +50,12 @@ Template.shareInfo.events({
     		return;
     	}
     	addTwitterId(twitterId);
+    	addTweetsClient();
     	Session.set("isAddingTwitter", false);	
     },
     "click #RefreshTweets": function() {
-    	if (Session.get('loadingTweets') == true) {
-    		alert("Mining Twitter in Progress. Please wait... ");
-    		return;
-    	}
-    	Session.set('loadingTweets',true);
-
-		Meteor.call('addTweets',Meteor.user().profile.twitterId, Meteor.user().profile.timeStamp, Meteor.user().profile.sinceId, Meteor.user()._id, function(err,result) {
-			if (err != undefined) {
-				alert("Error: "+err.reason);
-			}			
-			Session.set('loadingTweets',false);
-		});					
-    	
+    	//Set Spin icon
+		addTweetsClient();
     }
 });
 
@@ -42,7 +70,6 @@ Template.shareInfo.helpers({
 	hastwitterAccount: function () {
       return Meteor.user().profile.twitterId != "";
     }
-
 });
 
 

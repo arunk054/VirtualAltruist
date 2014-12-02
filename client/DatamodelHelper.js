@@ -9,5 +9,5 @@ addTwitterId = function(TwitterId){
 
 	Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.twitterId": TwitterId}} );
 	var newScore = Meteor.user().profile.score + PointsForTwitter;
-	Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.score": newScore}} );
+	Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.score": newScore}} );	
 }
