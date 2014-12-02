@@ -8,12 +8,24 @@ Template.expProgressBar.helpers({
     getInitProgressBar: function () {
 //      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
     var curScore = Meteor.user().profile.score;
-    return Math.floor( curScore / 100);
+    var numberStars = Math.floor( curScore / 100);
+    var level = Math.floor(numberStars/5);
+    numberStars = numberStars-level*5
+    if(numberStars == 0){
+      numberStars = level*5;
+    }
+    return numberStars;
     },    
     getEndProgressBar: function () {
 //      return Math.floor((Tasks.find({checked: {$ne: false}}).count()/Tasks.find().count())*100);    
     var curScore = Meteor.user().profile.score;
-    return Math.floor( curScore / 100)+1;
+    var numberStars = Math.floor( curScore / 100)+1;
+    var level = Math.floor(numberStars/5);
+    numberStars = numberStars-level*5
+    if(numberStars == 0){
+      numberStars = level*5;
+    }
+    return numberStars;
     },
 
 });
