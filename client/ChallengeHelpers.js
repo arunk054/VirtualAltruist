@@ -19,20 +19,15 @@ get_tasks_incompleted_id = function(){
 }
 
 Template.challengePageTemplate.helpers({
-    isNotFirst: function(){
-        if(Session.get("challengeIndex") == 0){
-            return false;
-        }
-        return true;
-    },
-    isNotLast: function(){
-        
-        if(Session.get("challengeIndex") < get_tasks_incompleted_id().length-1){
-            return true;
-        }
-        return false;
+    getIncompletedTask: function(){
+        return pred_task.find({task_id: {$nin: get_tasks_done_id()}}).fetch();
     }
 });
+
+Template.shareTaskDiv.helpers({
+    hastwitterAccount: function() { return Meteor.user().profile.twitterId != ""; }
+});
+
 
 Template.shareTask.helpers({
     hastwitterAccount: function() { return Meteor.user().profile.twitterId != ""; },
@@ -62,8 +57,30 @@ Template.challengePageTemplate.events({
   }
 });
 Template.shareTask.events({
-    "click #facebook-share-task": function () {
+    "click #facebook-share-task": function (event) {
         var task_shared = pred_task.findOne({task_id: get_tasks_incompleted_id()[Session.get("challengeIndex")]});
+        FB.ui({
+            method: 'feed',
+            link: task_shared.link,
+            caption: task_shared.share_text
+          },
+          function(response) {
+            if (response && !response.error_code) {
+                var newScore = Meteor.user().profile.score + task_shared.points;
+                Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.score": newScore}} );
+                Meteor.call("addCompletedTask", task_shared , "share");
+                if(Session.get("challengeIndex")>0){
+                    Session.set("challengeIndex", Session.get("challengeIndex")-1);
+                }
+            } else {
+            }
+          });
+      }
+});
+
+Template.shareTaskDiv.events({
+    "click .facebook-share-task": function (event) {
+        var task_shared = pred_task.findOne({task_id: parseInt(event.currentTarget.id)});
         FB.ui({
             method: 'feed',
             link: task_shared.link,

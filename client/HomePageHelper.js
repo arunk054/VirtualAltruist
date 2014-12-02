@@ -40,7 +40,13 @@ Template.homePageTemplate.helpers({
       return undefined;
     },
     challengeTab: function() {
-      if(Session.get("infoTab") == "challenge" || Session.get("infoTab") == undefined ){
+      if(Session.get("infoTab") == "challenge"){
+        return true;
+      }
+      return undefined;
+    },
+    contributionTab: function() {
+      if(Session.get("infoTab") == "contribution" || Session.get("infoTab") == undefined ){
         return true;
       }
       return undefined;
@@ -52,21 +58,38 @@ Template.homePageTemplate.helpers({
       return undefined;
     },
     getShareTaskPoints: function(){
-    	var tasks = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}).fetch();
-    	var totalPointsTask = 0;
-    	for( var i=0; i < tasks.length; i++){
-    		totalPointsTask = totalPointsTask + tasks[i].points_task;
-    	}
-    	return totalPointsTask;
+      var tasks = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}).fetch();
+      var totalPointsTask = 0;
+      for( var i=0; i < tasks.length; i++){
+        totalPointsTask = totalPointsTask + tasks[i].points_task;
+      }
+      return totalPointsTask;
+    },
+    getContTaskPoints: function(){
+      var tasks = completed_task.find({completed_by: Meteor.userId(), type_task: "contribution"}).fetch();
+      var totalPointsTask = 0;
+      for( var i=0; i < tasks.length; i++){
+        totalPointsTask = totalPointsTask + tasks[i].points_task;
+      }
+      return totalPointsTask;
     },
     getShareTasksByUser: function(){
-    	var tasks_completed_user = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}, {sort: {createdAt: -1}}).fetch();
-    	var list_completed = [];
-    	for (var i=0; i< tasks_completed_user.length; i++){
-    		var info_task = pred_task.findOne({task_id:tasks_completed_user[i].completed_task_id});
-    		list_completed[i] = {data_task: info_task, type_task: tasks_completed_user[i].type_task};
-    	}
-    	return list_completed;
+      var tasks_completed_user = completed_task.find({completed_by: Meteor.userId(), type_task: "share"}, {sort: {createdAt: -1}}).fetch();
+      var list_completed = [];
+      for (var i=0; i< tasks_completed_user.length; i++){
+        var info_task = pred_task.findOne({task_id:tasks_completed_user[i].completed_task_id});
+        list_completed[i] = {data_task: info_task, type_task: tasks_completed_user[i].type_task};
+      }
+      return list_completed;
+    },
+    getContTasksByUser: function(){
+      var tasks_completed_user = completed_task.find({completed_by: Meteor.userId(), type_task: "contribution"}, {sort: {createdAt: -1}}).fetch();
+      var list_completed = [];
+      for (var i=0; i< tasks_completed_user.length; i++){
+        var info_task = pred_cont_task.findOne({task_id:tasks_completed_user[i].completed_task_id});
+        list_completed[i] = {data_task: info_task, type_task: tasks_completed_user[i].type_task};
+      }
+      return list_completed;
     },
     getAutoTweetsByUser : function(){
     	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()}, {sort: {createdAt: 1}});
@@ -121,6 +144,9 @@ Template.homePageTemplate.events({
   },
   "click .challenge-tab": function(event){
     Session.set("infoTab","challenge");
+  },
+  "click .contribution-tab": function(event){
+    Session.set("infoTab","contribution");
   },
   "click .twitter-tab": function(event){
     Session.set("infoTab","twitter");
