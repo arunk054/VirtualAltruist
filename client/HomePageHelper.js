@@ -92,7 +92,7 @@ Template.homePageTemplate.helpers({
       return list_completed;
     },
     getAutoTweetsByUser : function(){
-    	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()}, {sort: {createdAt: 1}});
+    	var autoTweets = AutoTweets.find({completed_by:Meteor.userId()}, {sort: {createdAt: -1}});
     	var returnArr = [];
     	var twitterId = Meteor.user().profile.twitterId;
 		autoTweets.forEach(

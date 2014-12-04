@@ -61,6 +61,9 @@ TweetWords.insert({
 TweetWords.insert({
 	word: "blindalive"
 });
+TweetWords.insert({
+	word: "#IceBucketChallenge"
+});
 
 
 
