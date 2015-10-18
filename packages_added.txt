@@ -1,8 +1,10 @@
-accounts-ui
-accounts-facebook
-meteorhacks:npm
-twitter
-bootstrap
-mrt:twit
+meteor add accounts-ui accounts-password accounts-facebook linto:fontawesome mizzao:bootstrap-3
 
-create packages.json file and add {"twit":"1.1.15"}
+
+Packages used:
+
+accounts-ui 
+accounts-password 
+accounts-facebook 
+linto:fontawesome 
+mizzao:bootstrap-3
