@@ -1,2 +1,8 @@
 accounts-ui
 accounts-facebook
+meteorhacks:npm
+twitter
+bootstrap
+mrt:twit
+
+create packages.json file and add {"twit":"1.1.15"}

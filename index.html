@@ -3,13 +3,73 @@
 </head>
 
 <body>
-	<div id='fb-root'></div>
-  <h1>Grow your altruistic footprint on the web now!</h1>
+<div class = outer>
+<div class = "cover">
+	<img src = "/images/cover1.jpg" width= "15%" />
+</div>
 
-	<div>
-		{{> loginButtons}}
+	<div id='fb-root'></div>
+	<div class="text-header">
+		  <h1>Grow your altruistic footprint on the web now!</h1>
+	 </div>
+
+	<div class="text-description"> </div>
+	
+	<div >
+			{{> loginButtons}}
+			<span id="login_pic">
+				{{#if currentUser}}
+					{{> profilePic}}
+				{{/if}}
+			</span>
+			
 	</div>
+
+{{#if currentUser}}
+<!--Check if User already Exists
+Check if Twitter ID already-->
+{{createNewUser}}
+	{{#if showTwitterIdInput}}
+		{{> twitterIdForm}}
+	{{/if}}
+{{/if}}
+
+	<!--
 	<form class="new-task">
-		<input type="submit" name="submit_task" value="Submit this task on FB" />
-	 </form>
+		<input type="submit" name="submit_task" value="Submit this task on FB" /> 
+	 </form> -->
+	 
+</div>
+
+{{> FBForm}}
 </body>
+
+<template name="profilePic">
+	<img src="{{profilePic}}" width="60px"/>
+</template>
+
+
+<template name="twitterIdForm">
+		<div>
+		<form role="form" class="TwitterIDForm">
+		  <div class="form-group">
+			<label for="twitterId">Enter Your Twitter ID:</label>
+			<input type="twitterId" class="form-control" id="TwitterId">
+		  </div>	  
+		  <div class="upper_margin">
+			  <button type="button" class="btn btn-default" id="TwitIdButton">Submit</button>
+		  </div>
+		</form>				
+		</div>
+</template>
+
+
+<template name="FBForm">
+		<div>
+		<form role="form" class="FBPost">
+		  <div class="upper_margin">
+			  <button type="submit" class="btn btn-default" id="FBPostButton">Share on FB</button>
+		  </div>
+		</form>				
+		</div>
+</template>

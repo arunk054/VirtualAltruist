@@ -1,11 +1,11 @@
 // All code here is client code
 
-	   
+       
 	   window.fbAsyncInit = function(){
 		FB.init({
 		  appId      : '287242084819085',
 		  xfbml      : true,
-		  version    : 'v2.1'
+		  version    : 'v2.0'
 		});
 	};
 	(function(d, s, id){
@@ -19,17 +19,37 @@
     
 		Accounts.ui.config({
 			requestPermissions: {
-			facebook: ['email', 'public_profile'],
+			facebook: ['email', 'public_profile', 'user_friends'],
 			}
 		});
 
-	Template.body.events({
-	  "submit .new-task": function (event) {
-		FB.ui({
-		  method: 'send',
-		  link: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
-		});
+
 	  
-	  }
+	  Template.profilePic.helpers({
+	  	profilePic: function() {
+  			id = Meteor.user().services.facebook.id;
+			return "http://graph.facebook.com/"+id+"/picture";
+			return id;
+	  	}
+	  });
+	  
+ 	 Template.FBForm.events({	  
+	 	 "submit .FBPost": function (event) {
+
+			FB.ui({
+			  method: 'feed',
+			  link: 'http://www.nytimes.com/2011/06/15/arts/people-argue-just-to-win-scholars-assert.html',
+			  caption: 'Hey Check out!',
+			  picture: '',
+			  description: 'All the things',
+			  name:'hello'
+			},
+			function(response) {
+				window.close();
+		  	}
+
+			
+		);	  
+		  }
 	  });
 
